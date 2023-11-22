@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4883367382525072800}
   - component: {fileID: 6329605771538145779}
   - component: {fileID: 8895133558710135801}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StoneTile1
   m_TagString: Untagged
   m_Icon: {fileID: 0}

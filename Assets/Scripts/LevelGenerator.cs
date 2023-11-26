@@ -7,6 +7,9 @@ public class LevelGenerator : MonoBehaviour
     public Transform[] startingPositions;
     public GameObject[] rooms;  //  index 0 - LR; index 1 - LRB; index 2 - LRT, index 3 - LRBT
 
+    public GameObject playerPrefab;
+    public Canvas loadingCanvas;
+
     private int direction;
     public float moveAmount;
 
@@ -21,18 +24,34 @@ public class LevelGenerator : MonoBehaviour
     public LayerMask room;
 
     private int downCounter;
+    private bool playerSpawned = false;
+    private GameObject spawnPoint;
 
     private void Start()
     {
+        loadingCanvas.enabled = true;
+
         int randStartPos = Random.Range(0, startingPositions.Length);
         transform.position = startingPositions[randStartPos].position;
         Instantiate(rooms[0], transform.position, Quaternion.identity);
-        
+
+        spawnPoint = GameObject.FindWithTag("PlayerSpawnPoint");
+
         direction = Random.Range(1, 6);
     }
 
     private void Update()
     {
+        if (spawnPoint == null)
+        {
+            spawnPoint = GameObject.FindWithTag("PlayerSpawnPoint");
+        } 
+        else if (!playerSpawned && stopGeneration)
+        {
+            PlayerSpawn();
+            playerSpawned = true;
+        }
+
         if (timeBtwRoom <= 0 && stopGeneration == false)
         {
             Move();
@@ -41,6 +60,7 @@ public class LevelGenerator : MonoBehaviour
         {
             timeBtwRoom -= Time.deltaTime;
         }
+
     }
 
     private void Move()
@@ -138,4 +158,15 @@ public class LevelGenerator : MonoBehaviour
         
     }
 
+    private void PlayerSpawn()
+    {
+        Vector3 spawnPosition = spawnPoint.transform.position;
+
+        Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+
+        loadingCanvas.enabled = false;
+
+    }
+
+    
 }

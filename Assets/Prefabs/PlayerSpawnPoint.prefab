@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6335058014998679250}
-  - component: {fileID: 6942277385639761060}
   m_Layer: 0
   m_Name: PlayerSpawnPoint
-  m_TagString: Untagged
+  m_TagString: PlayerSpawnPoint
   m_Icon: {fileID: -5397416234189338067, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -32,17 +31,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6942277385639761060
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7536096153080926295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ffd607a36ba3ff41b5d4646d6e6bc89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 1787277071871187912, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}

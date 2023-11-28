@@ -8,17 +8,16 @@ public class PlayerCombat : MonoBehaviour
     public GameObject spellPrefab;
     public float timeBetweenSpells;
     public Animator animator;
+    public PlayerMovement playerMovement;
 
     public bool isCastingSpell = false;
-
-    private float angle;
-
+    public float spellForce = 10f;
 
     void Update()
     {
         if (Input.GetButtonDown("SpellCast"))
         {
-            if (!isCastingSpell)
+            if (!isCastingSpell && !playerMovement.isJumping)
             {
                 StartCoroutine(SpellCastControler());
             }
@@ -32,13 +31,9 @@ public class PlayerCombat : MonoBehaviour
         isCastingSpell = true;
 
         animator.SetBool("IsAttacking", true);
-        if (angle != 0)
-        {
-            CastSpell();
-        }
-
-        yield return new WaitForSeconds(timeBetweenSpells);
         
+        yield return new WaitForSeconds(timeBetweenSpells);
+        CastSpell();
 
         isCastingSpell = false;
         animator.SetBool("IsAttacking", false);
@@ -46,16 +41,13 @@ public class PlayerCombat : MonoBehaviour
 
     private float PadControll()
     {
-        // Odczytaj wejœcie z dr¹¿ka pada
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
-        // SprawdŸ, czy dr¹¿ek pada ma jakiekolwiek wejœcie
         if (Mathf.Abs(horizontalInput) > 0.1f || Mathf.Abs(verticalInput) > 0.1f)
         {
-            // Oblicz k¹t na podstawie wejœcia z dr¹¿ka pada
-            angle = Mathf.Atan2(verticalInput, horizontalInput) * Mathf.Rad2Deg;
-
+            // Oblicz k¹t w stopniach
+            float angle = Mathf.Atan2(verticalInput, horizontalInput) * Mathf.Rad2Deg;
             return angle;
         }
         else
@@ -66,16 +58,19 @@ public class PlayerCombat : MonoBehaviour
 
     private void CastSpell()
     {
-        angle = PadControll();
+        float angle = PadControll();
+        Spell spellComponent = spellPrefab.GetComponent<Spell>();
 
-        // Utwórz instancjê obiektu kuli 2D
-        GameObject spell = Instantiate(spellPrefab, transform.position, Quaternion.identity);
-
-        // Ustaw rotacjê kuli zgodnie z kierunkiem
-        spell.transform.rotation = Quaternion.Euler(0, 0, angle);
-
-        // Dodaj si³ê do kuli, aby lecia³a w okreœlonym kierunku
-        Rigidbody2D spellRb = spell.GetComponent<Rigidbody2D>();
-        spellRb.AddForce(new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), ForceMode2D.Impulse);
+        // SprawdŸ, czy obiekt ma komponent Spell
+        if (spellComponent != null)
+        {
+            // Przypisz wartoœæ do zmiennej angle w skrypcie Spell
+            spellComponent.angle = angle;
+        }
+        else
+        {
+            Debug.LogError("Obiekt spellPrefab nie zawiera komponentu Spell.");
+        }
+        Instantiate(spellPrefab, transform.position, Quaternion.identity);
     }
 }

@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 40f;
 
     private float horizontalMove = 0f;
-    private bool jump = false;
+    public bool isJumping = false;
 
 
 
@@ -20,28 +20,24 @@ public class PlayerMovement : MonoBehaviour
     {
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-/*        if (!playerCombat.isCastingSpell)
-        {
-            horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-            animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-        }*/
         
         if (Input.GetButtonDown("Jump") && !playerCombat.isCastingSpell)
         {
-            jump = true;
+            isJumping = true;
             animator.SetBool("IsJumping", true);
         }
     }
 
     private void FixedUpdate()
     {
-        controller.Move(horizontalMove * Time.fixedDeltaTime, false, jump);
-        jump = false;
+        controller.Move(horizontalMove * Time.fixedDeltaTime, false, isJumping);
+        
 
     }
 
     public void OnLanding()
     {
         animator.SetBool("IsJumping", false);
+        isJumping = false;
     }
 }

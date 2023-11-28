@@ -411,6 +411,7 @@ MonoBehaviour:
   animator: {fileID: 6592858719222155801}
   playerCombat: {fileID: 2180888927639772086}
   runSpeed: 40
+  isJumping: 0
 --- !u!95 &6592858719222155801
 Animator:
   serializedVersion: 5
@@ -444,9 +445,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellPrefab: {fileID: 5888704786317394494, guid: 8ee97701f976c2e4484881cf04ffb0a3, type: 3}
-  timeBetweenSpells: 1
+  timeBetweenSpells: 0.35
   animator: {fileID: 6592858719222155801}
+  playerMovement: {fileID: 5416054531538758791}
   isCastingSpell: 0
+  spellForce: 10
 --- !u!1 &3755036158713204645
 GameObject:
   m_ObjectHideFlags: 0

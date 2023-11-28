@@ -443,6 +443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a504e09ef81b0b4fa4609cfdb8a08d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spellPrefab: {fileID: 5888704786317394494, guid: 8ee97701f976c2e4484881cf04ffb0a3, type: 3}
   timeBetweenSpells: 1
   animator: {fileID: 6592858719222155801}
   isCastingSpell: 0

@@ -6,10 +6,10 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     public GameObject spellPrefab;
-    public float timeBetweenSpells;
     public Animator animator;
     public PlayerMovement playerMovement;
 
+    public float timeBetweenSpells;
     public bool isCastingSpell = false;
     public float spellForce = 10f;
 

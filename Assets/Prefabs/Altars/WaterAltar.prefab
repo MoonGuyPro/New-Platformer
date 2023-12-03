@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7162436450307296969}
   - component: {fileID: 7162436450307296968}
   - component: {fileID: 1390591234362568038}
+  - component: {fileID: 4115736052199716787}
   m_Layer: 0
   m_Name: WaterAltar
   m_TagString: Untagged
@@ -31,7 +32,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7162436450307296968
 SpriteRenderer:
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4115736052199716787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7162436450307296971}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56f44171860b3947847145e1bc7a9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSpellPrefab: {fileID: 5888704786317394494, guid: 82c600b260f9fd044b760afbbf6216ec, type: 3}

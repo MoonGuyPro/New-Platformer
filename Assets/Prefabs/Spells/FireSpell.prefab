@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2624772127006471860}
   - component: {fileID: 5814447432798449592}
   - component: {fileID: -5824687125667226696}
-  - component: {fileID: 5037783795197498482}
+  - component: {fileID: -6819442094359997868}
   m_Layer: 0
-  m_Name: Circle
+  m_Name: FireSpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5754717, g: 0.008143453, b: 0.008143453, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5037783795197498482
+--- !u!114 &-6819442094359997868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,9 +122,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 5888704786317394494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cfe520bcdeab9b647acc480222e2ec23, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ace2bdd32bd89f4e99dd8bce6ab85ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  angle: 0
-  rigidbody: {fileID: -5824687125667226696}
+  fireSpeed: 10
+  fireDamage: 10

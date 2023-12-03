@@ -2,26 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ISpell
+
+
+
+public class Spell : MonoBehaviour
 {
-    float speed { get; set; }
-    float damage { get; set; }
-    float angle { get; set; }
-
-}
-
-
-[RequireComponent(typeof(Rigidbody2D))]
-public class Spell : MonoBehaviour, ISpell
-{
-    public float speed { get; set; }
-    public float damage { get; set; }
-    public float angle { get; set; }
+    public float speed;
+    public float damage;
+    public float angle;
 
     private new Rigidbody2D rigidbody;
 
-    // Metoda Start oznaczona jako protected
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();

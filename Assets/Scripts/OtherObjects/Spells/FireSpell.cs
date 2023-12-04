@@ -4,13 +4,8 @@ using UnityEngine;
 
 public class FireSpell : Spell
 {
-    public float fireSpeed;
-    public float fireDamage;
     protected override void Start()
     {
-        speed = fireSpeed;
-        damage = fireDamage;
-
         base.Start();
     }
 
@@ -19,4 +14,10 @@ public class FireSpell : Spell
 
         base.FixedUpdate();
     }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (!other.CompareTag("Player"))
+            Destroy(gameObject);
+    }
+    
 }

@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2624772127006471860}
   - component: {fileID: 5814447432798449592}
   - component: {fileID: -5824687125667226696}
-  - component: {fileID: 6039050380313854539}
-  - component: {fileID: -2480666750599599932}
+  - component: {fileID: 1792656925021394747}
+  - component: {fileID: 9037480966358506312}
   m_Layer: 8
-  m_Name: WaterSpell
+  m_Name: WindSpell
   m_TagString: Spell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.011347434, g: 0.47109285, b: 0.8018868, a: 1}
+  m_Color: {r: 0.53306335, g: 0.9191505, b: 0.9339623, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -114,7 +114,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &6039050380313854539
+--- !u!114 &1792656925021394747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,13 +123,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5888704786317394494}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d04efe42a6a9530418dab8860109d7af, type: 3}
+  m_Script: {fileID: 11500000, guid: dc4c903de0484b845ac7d1833675bc96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  damage: 30
-  angle: 90
---- !u!58 &-2480666750599599932
+  speed: 20
+  damage: 20
+  angle: 0
+--- !u!58 &9037480966358506312
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

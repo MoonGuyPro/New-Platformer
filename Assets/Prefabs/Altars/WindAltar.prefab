@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8982736325567403909}
   - component: {fileID: 8982736325567403908}
   - component: {fileID: -707076150680798432}
+  - component: {fileID: 732780624147616148}
   m_Layer: 0
   m_Name: WindAltar
   m_TagString: Untagged
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &732780624147616148
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8982736325567403911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56f44171860b3947847145e1bc7a9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSpellPrefab: {fileID: 5888704786317394494, guid: 4fb6a8106a545764687ed5966e1de71d, type: 3}

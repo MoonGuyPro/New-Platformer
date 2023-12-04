@@ -1,32 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 
 
-
+[RequireComponent(typeof(Rigidbody2D))]
 public class Spell : MonoBehaviour
 {
     public float speed;
     public float damage;
     public float angle;
 
-    private new Rigidbody2D rigidbody;
+    private Rigidbody2D _rigidbody;
 
     protected virtual void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
+        _rigidbody = GetComponent<Rigidbody2D>();
     }
 
 
     protected virtual void FixedUpdate()
     {
-        // Oblicz sk³adowe wektora si³y na podstawie k¹ta
+        // Oblicz skladowe wektora sily na podstawie kata
         float launchAngleRad = angle * Mathf.Deg2Rad;
         float forceX = Mathf.Cos(launchAngleRad);
         float forceY = Mathf.Sin(launchAngleRad);
         Vector2 direction = new Vector2(forceX, forceY);
 
-        rigidbody.velocity = direction * speed;
+        _rigidbody.velocity = direction * speed;
     }
+
 }

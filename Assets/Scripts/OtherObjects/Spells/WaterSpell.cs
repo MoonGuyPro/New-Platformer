@@ -14,4 +14,9 @@ public class WaterSpell : Spell
 
         base.FixedUpdate();
     }
+
+    protected override void Deactivate()
+    {
+        base.Deactivate();
+    }
 }

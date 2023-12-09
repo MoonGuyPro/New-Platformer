@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -2480666750599599932}
   m_Layer: 8
   m_Name: WaterSpell
-  m_TagString: Spell
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,9 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04efe42a6a9530418dab8860109d7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
-  damage: 30
-  angle: 90
+  speed: 10
+  damage: 10
+  angle: 180
 --- !u!58 &-2480666750599599932
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -10,7 +10,10 @@ public class Spell : MonoBehaviour
 {
     public float speed;
     public float damage;
+    
+    [HideInInspector]
     public float angle;
+    public Vector2 rotation;
 
     private Rigidbody2D _rigidbody;
 
@@ -29,6 +32,24 @@ public class Spell : MonoBehaviour
         Vector2 direction = new Vector2(forceX, forceY);
 
         _rigidbody.velocity = direction * speed;
+        
+        float rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rotationAngle);
+    }
+
+    protected virtual void RotateSpell()
+    {
+        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    protected virtual void StopMoving()
+    {
+        speed = 0;
+    }
+    
+    protected virtual void Deactivate()
+    {
+        Destroy(gameObject);
     }
 
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 9037480966358506312}
   m_Layer: 8
   m_Name: WindSpell
-  m_TagString: Spell
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

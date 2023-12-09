@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerCombat : MonoBehaviour
 {
     public GameObject spellPrefab;
     public Animator animator;
     public PlayerMovement playerMovement;
+    public Transform magicWandPosition;
+
 
     public float timeBetweenSpells;
     public bool isCastingSpell = false;
@@ -46,13 +49,21 @@ public class PlayerCombat : MonoBehaviour
 
         if (Mathf.Abs(horizontalInput) > 0.1f || Mathf.Abs(verticalInput) > 0.1f)
         {
-            // Oblicz k¹t w stopniach
+            // Oblicz kï¿½t w stopniach
             float angle = Mathf.Atan2(verticalInput, horizontalInput) * Mathf.Rad2Deg;
             return angle;
         }
         else
         {
-            return 0;
+            if (transform.localScale.x > 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return 180;
+            }
+            
         }
     }
 
@@ -61,16 +72,16 @@ public class PlayerCombat : MonoBehaviour
         float angle = PadControll();
         Spell spellComponent = spellPrefab.GetComponent<Spell>();
 
-        // SprawdŸ, czy obiekt ma komponent Spell
+        // Sprawdï¿½, czy obiekt ma komponent Spell
         if (spellComponent != null)
         {
-            // Przypisz wartoœæ do zmiennej angle w skrypcie Spell
+            // Przypisz wartoï¿½ï¿½ do zmiennej angle w skrypcie Spell
             spellComponent.angle = angle;
         }
         else
         {
             Debug.LogError("Obiekt spellPrefab nie zawiera komponentu Spell.");
         }
-        Instantiate(spellPrefab, transform.position, Quaternion.identity);
+        Instantiate(spellPrefab, magicWandPosition.position , Quaternion.identity);
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7162436450307296968}
   - component: {fileID: 1390591234362568038}
   - component: {fileID: 4115736052199716787}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WaterAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 301713955
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0, g: 0.02828499, b: 0.9433962, a: 1}
   m_FlipX: 0
@@ -143,4 +143,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56f44171860b3947847145e1bc7a9b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  newSpellPrefab: {fileID: 5888704786317394494, guid: 82c600b260f9fd044b760afbbf6216ec, type: 3}
+  newSpellPrefab: {fileID: 7800797940738147676, guid: 27c7206798e87b64a9692dd78dea2646, type: 3}

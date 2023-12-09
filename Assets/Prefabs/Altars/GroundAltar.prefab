@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1938043816421109042}
   - component: {fileID: 1938043816421109043}
   - component: {fileID: -2136242572633393732}
-  m_Layer: 0
+  - component: {fileID: 5588480540169674397}
+  m_Layer: 9
   m_Name: GroundAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 301713955
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.38679248, g: 0.1214612, b: 0, a: 1}
   m_FlipX: 0
@@ -130,3 +131,16 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &5588480540169674397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1938043816421109040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c56f44171860b3947847145e1bc7a9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSpellPrefab: {fileID: 7800797940738147676, guid: 27c7206798e87b64a9692dd78dea2646, type: 3}

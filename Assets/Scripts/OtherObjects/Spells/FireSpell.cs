@@ -26,8 +26,4 @@ public class FireSpell : Spell
 
     }
 
-    protected override void RotateSpell()
-    {
-        base.RotateSpell();
-    }
 }

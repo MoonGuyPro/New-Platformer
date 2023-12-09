@@ -13,7 +13,6 @@ public class Spell : MonoBehaviour
     
     [HideInInspector]
     public float angle;
-    public Vector2 rotation;
 
     private Rigidbody2D _rigidbody;
 
@@ -35,11 +34,6 @@ public class Spell : MonoBehaviour
         
         float rotationAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0f, 0f, rotationAngle);
-    }
-
-    protected virtual void RotateSpell()
-    {
-        //transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
     protected virtual void StopMoving()

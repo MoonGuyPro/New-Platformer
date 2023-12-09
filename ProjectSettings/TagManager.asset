@@ -17,7 +17,7 @@ TagManager:
   - Player
   - Ground
   - Spells
-  - 
+  - Altar
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
     locked: 0
   - name: Background
     uniqueID: 301713955
+    locked: 0
+  - name: Foreground
+    uniqueID: 1468354083
     locked: 0

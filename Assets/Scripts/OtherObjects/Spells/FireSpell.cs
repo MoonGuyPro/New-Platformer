@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireSpell : Spell
 {
     public Animator animator;
-    
+
     protected override void Start()
     {
         base.Start();
@@ -18,6 +18,12 @@ public class FireSpell : Spell
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (other.CompareTag("Enemy"))
+        {
+            Health enemyHealth = other.GetComponent<Health>();
+            enemyHealth.TakeDamage(base.damage);
+        }
+        
         if (!other.CompareTag("Player"))
         {
             animator.SetBool("explode", true);

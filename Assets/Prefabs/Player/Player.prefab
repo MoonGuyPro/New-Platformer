@@ -175,6 +175,7 @@ GameObject:
   - component: {fileID: 5416054531538758791}
   - component: {fileID: 6592858719222155801}
   - component: {fileID: 2180888927639772086}
+  - component: {fileID: -74181176238058492}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -453,6 +454,21 @@ MonoBehaviour:
   timeBetweenSpells: 0.35
   isCastingSpell: 0
   spellForce: 10
+--- !u!114 &-74181176238058492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787277071871187912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7093184d75bbe489d014684f59bf1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 5
+  currentHealth: 0
+  animator: {fileID: 0}
 --- !u!1 &3755036158713204645
 GameObject:
   m_ObjectHideFlags: 0

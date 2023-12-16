@@ -20,11 +20,14 @@ public class MeleeEnemy : MonoBehaviour
     private Animator animator;
     private Health playerHealth;
 
+    private EnemyPatrol enemyPatrol;
+
     private void Awake()
     {
         animator = GetComponent<Animator>();
+        enemyPatrol = GetComponent<EnemyPatrol>();
     }
-
+    
     private void Update()
     {
         cooldownTimer += Time.deltaTime;
@@ -37,6 +40,11 @@ public class MeleeEnemy : MonoBehaviour
                 Debug.Log("atak");
                 animator.SetTrigger("MeleeAttack");
             }
+        }
+
+        if (enemyPatrol != null)
+        {
+            enemyPatrol.enabled = !PlayerInSight();
         }
         
         

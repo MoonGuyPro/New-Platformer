@@ -17,23 +17,59 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private float rangeGroundCollider;
     [SerializeField] private float groundColliderDistance;
 
-    [Header("Enemy")] 
-    [SerializeField] private Transform enemy;
-
     [Header("Movement parameters")] 
     [SerializeField] private float speed;
-    
-    
-    
-    
-    
-    
-    private Vector2 boxCastVector2;
 
+    [Header("Idle Behaviour")] 
+    [SerializeField] private float idleDuration;
+    private float idleTimer;
 
-    private void Awake()
+    [Header(("Enemy Animator"))] 
+    [SerializeField] private Animator anim;
+
+    private int direction;
+    
+
+    private void Start()
     {
+        direction = 1;
+    }
+    
+    private void OnDisable()
+    {
+        anim.SetBool("Moving", false);
+    }
 
+
+    private void Update()
+    {
+        if (WallInSight())
+        {
+            if (idleTimer > idleDuration)
+            {
+                direction *= -1;
+                MoveInDirection();
+            }
+
+        }
+        else
+        {
+            MoveInDirection();
+        }
+            
+    }
+
+    private void MoveInDirection()
+    {
+        idleTimer = 0;
+        anim.SetBool("Moving", true);
+        
+        //Change enemy face direction
+        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * direction, transform.localScale.y, transform.localScale.z);
+        
+        //Move enemy in direction
+        transform.position = new Vector3(transform.position.x + Time.deltaTime * direction * speed,
+            transform.position.y, transform.position.z);
     }
 
     private bool WallInSight()
@@ -41,16 +77,21 @@ public class EnemyPatrol : MonoBehaviour
         RaycastHit2D hitWall = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * rangeWallCollider * transform.localScale.x * wallColliderDistance, 
             new Vector2(boxCollider.bounds.size.x * rangeWallCollider, boxCollider.bounds.size.y/2), 0, Vector2.left, 0, wallAndGroundLayer);
         
-        RaycastHit2D hitGround = Physics2D.BoxCast(boxCollider.bounds.center + transform.right * rangeGroundCollider * transform.localScale.x * groundColliderDistance, 
+        Vector3 wektor = boxCollider.bounds.center + transform.right * rangeGroundCollider * transform.localScale.x * groundColliderDistance + new Vector3(0, -0.5f, 0);
+        
+        RaycastHit2D hitGround = Physics2D.BoxCast(wektor, 
             new Vector2(boxCollider.bounds.size.x * rangeGroundCollider, boxCollider.bounds.size.y/2), 0, Vector2.left, 0, wallAndGroundLayer);
 
-        if (hitWall.collider != null || hitGround != null)
+        if (hitWall.collider != null || hitGround.collider == null)
         {
-            //change direction
+            anim.SetBool("Moving", false);
+            idleTimer += Time.deltaTime;
+            return true;
         }
-            
-        
-        return hitWall.collider != null || hitGround != null;
+        else
+        {
+            return false;
+        }
     }
 
     private void OnDrawGizmos()
@@ -60,7 +101,8 @@ public class EnemyPatrol : MonoBehaviour
             new Vector2(boxCollider.bounds.size.x * rangeWallCollider, boxCollider.bounds.size.y/2));
         
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(boxCollider.bounds.min + transform.right * rangeGroundCollider * transform.localScale.x * groundColliderDistance, 
+        Vector3 wektor = boxCollider.bounds.center + transform.right * rangeGroundCollider * transform.localScale.x * groundColliderDistance + new Vector3(0, -0.5f, 0);
+        Gizmos.DrawWireCube(wektor, 
             new Vector2(boxCollider.bounds.size.x * rangeGroundCollider, boxCollider.bounds.size.y/2));
     }
 }

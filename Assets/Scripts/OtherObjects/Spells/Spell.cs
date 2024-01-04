@@ -10,15 +10,19 @@ public class Spell : MonoBehaviour
 {
     public float speed;
     public float damage;
-    
+    public string enemyTag;
+    public string casterTag;
+    public bool hit;
     [HideInInspector]
     public float angle;
+
 
     private Rigidbody2D _rigidbody;
 
     protected virtual void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        hit = false;
     }
 
 

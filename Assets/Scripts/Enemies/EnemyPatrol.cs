@@ -28,7 +28,7 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private Animator anim;
 
     private int direction;
-    
+
 
     private void Start()
     {
@@ -105,4 +105,5 @@ public class EnemyPatrol : MonoBehaviour
         Gizmos.DrawWireCube(wektor, 
             new Vector2(boxCollider.bounds.size.x * rangeGroundCollider, boxCollider.bounds.size.y/2));
     }
+    
 }

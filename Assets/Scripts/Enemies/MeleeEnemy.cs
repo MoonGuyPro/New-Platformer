@@ -6,12 +6,13 @@ using UnityEngine;
 public class MeleeEnemy : MonoBehaviour
 {
     [Header("Collider variables")]
-    [SerializeField] private float range;
     [SerializeField] private float colliderDistance;
     [SerializeField] private BoxCollider2D boxCollider;
     [Header("Attack variables")]
     [SerializeField] private float attackCooldown;
     [SerializeField] private int damage;
+    [SerializeField] private float range;
+    
     [SerializeField] private LayerMask playerLayer;
     
     private float cooldownTimer = Mathf.Infinity;
@@ -37,7 +38,6 @@ public class MeleeEnemy : MonoBehaviour
             if (cooldownTimer >= attackCooldown)
             {
                 cooldownTimer = 0;
-                Debug.Log("atak");
                 animator.SetTrigger("MeleeAttack");
             }
         }
@@ -46,8 +46,6 @@ public class MeleeEnemy : MonoBehaviour
         {
             enemyPatrol.enabled = !PlayerInSight();
         }
-        
-        
     }
 
     private bool PlayerInSight()

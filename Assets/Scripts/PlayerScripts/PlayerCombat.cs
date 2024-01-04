@@ -11,10 +11,11 @@ public class PlayerCombat : MonoBehaviour
     public PlayerMovement playerMovement;
     public Transform magicWandPosition;
 
+    [SerializeField] private int damage;
+
 
     public float timeBetweenSpells;
     public bool isCastingSpell = false;
-    public float spellForce = 10f;
 
     void Update()
     {
@@ -71,7 +72,10 @@ public class PlayerCombat : MonoBehaviour
     {
         float angle = PadControll();
         Spell spellComponent = spellPrefab.GetComponent<Spell>();
-
+        spellComponent.casterTag = "Player";
+        spellComponent.enemyTag = "Enemy";
+        spellComponent.damage = damage;
+        
         // Sprawd�, czy obiekt ma komponent Spell
         if (spellComponent != null)
         {

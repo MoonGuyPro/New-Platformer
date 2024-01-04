@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-
+    public float currentHealth;
     [SerializeField] private float startingHealth;
-    [HideInInspector] public float currentHealth;
+    [SerializeField] private Behaviour[] components;
     private Animator animator;
+    
 
     private void Awake()
     {
@@ -27,9 +28,17 @@ public class Health : MonoBehaviour
         else
         {
             animator.SetTrigger("Die");
-            //Destroy(gameObject);
+            
+            foreach (Behaviour comp in components)
+                comp.enabled = false;
+            
             //killed
         }
+    }
+
+    public void DestroyObject()
+    {
+        DestroyObject(gameObject);
     }
     
     private void AddHealth(float value)

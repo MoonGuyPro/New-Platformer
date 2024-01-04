@@ -18,13 +18,15 @@ public class FireSpell : Spell
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag(enemyTag) && !hit)
         {
             Health enemyHealth = other.GetComponent<Health>();
-            enemyHealth.TakeDamage(base.damage);
+            enemyHealth.TakeDamage(damage);
+            Debug.Log(damage);
+            hit = true;
         }
         
-        if (!other.CompareTag("Player"))
+        if (!other.CompareTag(casterTag))
         {
             animator.SetBool("explode", true);
             base.StopMoving();

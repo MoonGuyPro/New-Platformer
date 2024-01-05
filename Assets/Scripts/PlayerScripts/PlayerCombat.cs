@@ -12,10 +12,15 @@ public class PlayerCombat : MonoBehaviour
     public Transform magicWandPosition;
 
     [SerializeField] private int damage;
-
-
     public float timeBetweenSpells;
     public bool isCastingSpell = false;
+    private UIManager uiManager;
+
+    private void Awake()
+    {
+        uiManager = FindObjectOfType<UIManager>();
+    }
+
 
     void Update()
     {
@@ -27,7 +32,7 @@ public class PlayerCombat : MonoBehaviour
             }
             
         }
-        
+
     }
 
     private IEnumerator SpellCastControler()
@@ -87,5 +92,11 @@ public class PlayerCombat : MonoBehaviour
             Debug.LogError("Obiekt spellPrefab nie zawiera komponentu Spell.");
         }
         Instantiate(spellPrefab, magicWandPosition.position , Quaternion.identity);
+    }
+
+    private void PlayerDead()
+    {
+        uiManager.GameOver();
+        Time.timeScale = 0f;
     }
 }

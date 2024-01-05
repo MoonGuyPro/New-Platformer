@@ -18,7 +18,7 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private float groundColliderDistance;
 
     [Header("Movement parameters")] 
-    [SerializeField] private float speed;
+    public float speed;
 
     [Header("Idle Behaviour")] 
     [SerializeField] private float idleDuration;

@@ -6,9 +6,9 @@ public class FireSpell : Spell
 {
     public Animator animator;
 
-    protected override void Start()
+    protected override void Awake()
     {
-        base.Start();
+        base.Awake();
     }
 
     protected override void FixedUpdate()
@@ -22,7 +22,6 @@ public class FireSpell : Spell
         {
             Health enemyHealth = other.GetComponent<Health>();
             enemyHealth.TakeDamage(damage);
-            Debug.Log(damage);
             hit = true;
         }
         

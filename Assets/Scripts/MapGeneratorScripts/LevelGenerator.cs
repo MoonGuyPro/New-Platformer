@@ -25,7 +25,7 @@ public class LevelGenerator : MonoBehaviour
 
     private int downCounter;
     private bool playerSpawned = false;
-    private GameObject spawnPoint;
+    public GameObject spawnPoint;
 
     private void Start()
     {

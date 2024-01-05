@@ -19,7 +19,7 @@ public class Spell : MonoBehaviour
 
     private Rigidbody2D _rigidbody;
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         hit = false;

@@ -9,12 +9,14 @@ public class Health : MonoBehaviour
     [SerializeField] private float startingHealth;
     [SerializeField] private Behaviour[] components;
     private Animator animator;
+    private bool isDead;
     
 
     private void Awake()
     {
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
+        isDead = false;
     }
 
     public void TakeDamage(float damage)
@@ -27,18 +29,22 @@ public class Health : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger("Die");
+            if (!isDead)
+            {
+                animator.SetTrigger("Die");
             
-            foreach (Behaviour comp in components)
-                comp.enabled = false;
-            
-            //killed
+                foreach (Behaviour comp in components)
+                    comp.enabled = false;
+                //killed
+                isDead = true;
+            }
+
         }
     }
-
+    
     public void DestroyObject()
     {
-        DestroyObject(gameObject);
+        Destroy(gameObject);
     }
     
     private void AddHealth(float value)

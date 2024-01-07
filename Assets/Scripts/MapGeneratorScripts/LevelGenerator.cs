@@ -117,16 +117,16 @@ public class LevelGenerator : MonoBehaviour
             if (transform.position.y > minY)
             {
                 Collider2D roomDetection = Physics2D.OverlapCircle(transform.position, 1, room);
-                if (roomDetection.GetComponent<RoomType>().type != 1 && roomDetection.GetComponent<RoomType>().type != 3)
+                if (roomDetection.GetComponent<Room>().type != 1 && roomDetection.GetComponent<Room>().type != 3)
                 {
                     if(downCounter >= 2)
                     {
-                        roomDetection.GetComponent<RoomType>().RoomDestruction();
+                        roomDetection.GetComponent<Room>().RoomDestruction();
                         Instantiate(rooms[3], transform.position, Quaternion.identity);
                     }
                     else
                     {
-                        roomDetection.GetComponent<RoomType>().RoomDestruction();
+                        roomDetection.GetComponent<Room>().RoomDestruction();
 
                         int randBottomRoom = Random.Range(1, 4);
                         if (randBottomRoom == 2)

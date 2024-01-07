@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
+  roomType: 2
 --- !u!61 &1046775721039936656
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -7,18 +7,22 @@ using UnityEngine.Serialization;
 public class PlayerCombat : MonoBehaviour
 {
     public GameObject spellPrefab;
-    public Animator animator;
-    public PlayerMovement playerMovement;
-    public Transform magicWandPosition;
+    [SerializeField] private Animator animator;
+    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private Transform magicWandPosition;
+    
 
     [SerializeField] private int damage;
-    public float timeBetweenSpells;
-    public bool isCastingSpell = false;
+    [SerializeField] private float timeBetweenSpells;
+    public bool isCastingSpell;
     private UIManager uiManager;
+    private Health health;
 
     private void Awake()
     {
         uiManager = FindObjectOfType<UIManager>();
+        //health = GetComponent<Health>();
+        isCastingSpell = false;
     }
 
 
@@ -32,7 +36,6 @@ public class PlayerCombat : MonoBehaviour
             }
             
         }
-
     }
 
     private IEnumerator SpellCastControler()

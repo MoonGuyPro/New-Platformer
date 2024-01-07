@@ -8,7 +8,7 @@ public class Wood : MonoBehaviour
     public float destroyDelay;
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Spell"))
+        if (other.CompareTag("FireSpell"))
         {
             StartCoroutine(DestroyWoodWithDelay());
         }

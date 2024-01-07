@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8629259995905482908}
   m_Layer: 8
   m_Name: FireSpell
-  m_TagString: Spell
+  m_TagString: FireSpell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,6 +149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   damage: 5
+  enemyTag: 
+  casterTag: 
+  hit: 0
   angle: 0
   animator: {fileID: 7800797940738147679}
 --- !u!58 &8629259995905482908

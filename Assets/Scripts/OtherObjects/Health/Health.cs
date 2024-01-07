@@ -5,9 +5,16 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    [Header("Health")]
     public float currentHealth;
     [SerializeField] private float startingHealth;
     [SerializeField] private Behaviour[] components;
+
+    [Header("iFrames")] 
+    [SerializeField] private float iFramesDuration;
+    [SerializeField] private int numberOfFlashes;
+    private SpriteRenderer spriteRend;
+    
     private Animator animator;
     private bool isDead;
     
@@ -16,6 +23,7 @@ public class Health : MonoBehaviour
     {
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
+        spriteRend = GetComponent<SpriteRenderer>();
         isDead = false;
     }
 
@@ -26,6 +34,7 @@ public class Health : MonoBehaviour
         if (currentHealth > 0)
         {
             animator.SetTrigger("Hurt");
+            StartCoroutine(Invunerability());
         }
         else
         {
@@ -50,5 +59,19 @@ public class Health : MonoBehaviour
     private void AddHealth(float value)
     {
         currentHealth = Mathf.Clamp(currentHealth + value, 0, startingHealth);
+    }
+
+    private IEnumerator Invunerability()
+    {
+        Physics2D.IgnoreLayerCollision(6, 10, true);
+        //duration
+        for (int i = 0; i < numberOfFlashes; i++)
+        {
+            spriteRend.color = new Color(1, 0, 0,0.5f);
+            yield return new WaitForSeconds(iFramesDuration/(numberOfFlashes * 2));
+            spriteRend.color = Color.white;
+            yield return new WaitForSeconds(iFramesDuration/(numberOfFlashes * 2));
+        }
+        Physics2D.IgnoreLayerCollision(6, 10 , false);
     }
 }

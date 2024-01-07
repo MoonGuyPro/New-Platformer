@@ -24,13 +24,13 @@ public class LevelGenerator : MonoBehaviour
     public LayerMask room;
 
     private int downCounter;
-    private bool playerSpawned = false;
+    private bool playerSpawned;
     public GameObject spawnPoint;
 
     private void Start()
     {
         loadingCanvas.enabled = true;
-
+        playerSpawned = false;
         int randStartPos = Random.Range(0, startingPositions.Length);
         transform.position = startingPositions[randStartPos].position;
         Instantiate(rooms[0], transform.position, Quaternion.identity);

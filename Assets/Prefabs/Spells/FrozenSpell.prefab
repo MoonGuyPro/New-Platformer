@@ -187,7 +187,7 @@ MonoBehaviour:
   enemyTag: Enemy
   casterTag: Player
   hit: 0
-  angle: 180
-  slowFactor: 0.544
-  slowDuration: 5
+  angle: 0
+  slowFactor: 0.181
+  slowDuration: 2
   animator: {fileID: 7800797940738147679}

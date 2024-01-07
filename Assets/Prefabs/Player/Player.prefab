@@ -268,10 +268,10 @@ RectTransform:
   m_Father: {fileID: 1373692052111249475}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -677.21313, y: 457.71436}
-  m_SizeDelta: {x: 719.5336, y: 84.3912}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 359.78687, y: -42.285645}
+  m_SizeDelta: {x: 719.5336, y: 84.391174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4282572003182028085
 CanvasRenderer:
@@ -619,7 +619,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.20756406, y: -0.09808338}
@@ -719,7 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a504e09ef81b0b4fa4609cfdb8a08d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellPrefab: {fileID: 7800797940738147676, guid: fed1581af1a27aa44bd27cb8cdcf9be3, type: 3}
+  spellPrefab: {fileID: 7800797940738147676, guid: 27c7206798e87b64a9692dd78dea2646, type: 3}
   animator: {fileID: 6592858719222155801}
   playerMovement: {fileID: 5416054531538758791}
   magicWandPosition: {fileID: 2128538082561874271}
@@ -743,6 +743,8 @@ MonoBehaviour:
   components:
   - {fileID: 5416054531538758791}
   - {fileID: 2180888927639772086}
+  iFramesDuration: 1.5
+  numberOfFlashes: 2
 --- !u!1 &2423963340400693236
 GameObject:
   m_ObjectHideFlags: 0
@@ -1388,10 +1390,10 @@ RectTransform:
   m_Father: {fileID: 1373692052111249475}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -677.21313, y: 457.71436}
-  m_SizeDelta: {x: 719.5336, y: 84.3912}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 359.78687, y: -42.285645}
+  m_SizeDelta: {x: 719.5336, y: 84.391174}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4545667690053566417
 CanvasRenderer:

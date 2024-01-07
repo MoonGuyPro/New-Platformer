@@ -16,6 +16,8 @@ public class Spell : MonoBehaviour
     [HideInInspector]
     public float angle;
 
+    private SpriteRenderer spriteRenderer;
+
 
     private Rigidbody2D _rigidbody;
 
@@ -23,6 +25,7 @@ public class Spell : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         hit = false;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
@@ -47,6 +50,13 @@ public class Spell : MonoBehaviour
     
     protected virtual void Deactivate()
     {
+        StartCoroutine(Destroy());
+    }
+
+    protected virtual IEnumerator Destroy()
+    {
+        spriteRenderer.enabled = false;
+        yield return new WaitForSeconds(6);
         Destroy(gameObject);
     }
 

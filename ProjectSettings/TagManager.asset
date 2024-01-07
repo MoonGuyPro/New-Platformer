@@ -8,6 +8,7 @@ TagManager:
   - Wood
   - Spell
   - Enemy
+  - FireSpell
   layers:
   - Default
   - TransparentFX

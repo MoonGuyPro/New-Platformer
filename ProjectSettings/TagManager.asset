@@ -9,6 +9,8 @@ TagManager:
   - Spell
   - Enemy
   - FireSpell
+  - Healing
+  - Coin
   layers:
   - Default
   - TransparentFX

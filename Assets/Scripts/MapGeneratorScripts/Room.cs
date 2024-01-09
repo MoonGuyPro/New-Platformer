@@ -6,7 +6,7 @@ public class Room : MonoBehaviour
 {
     public int type;
     public NewLevelGeneratorTerrain.RoomType roomType;
-    public int numberOfRoomFromLevelGenerator;
+    public int roomNumber;
 
     public void RoomDestruction()
     {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,23 @@ using UnityEngine;
 public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
 {
     [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject meleeEnemyPrefab;
+    [SerializeField] private GameObject rangeEnemyPrefab;
+
+    private NewLevelGeneratorInteractiveObjects generator;
+
+    private void Start()
+    {
+        generator = FindObjectOfType<NewLevelGeneratorInteractiveObjects>();
+    }
+
+    private void Update()
+    {
+        if (generator.stopGeneration)
+        {
+            
+        }
+    }
 
     /*private void PlayerSpawn()
     {

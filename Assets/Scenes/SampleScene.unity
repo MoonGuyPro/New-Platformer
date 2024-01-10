@@ -5955,7 +5955,8 @@ MonoBehaviour:
   moveAmount: 10
   startTimeBtwRoom: 0.25
   stopGeneration: 0
-  generatedRooms: []
+  generatedRoomsOnPath: []
+  generatedRandomRooms: []
 --- !u!114 &450002941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5986,15 +5987,15 @@ MonoBehaviour:
   finishPoint: {fileID: 8265196597362927187, guid: 140d46bca5e98cd4791081f6879c13ed, type: 3}
   spawnPoint: {fileID: 7285373822752351682, guid: 697a52d2941180d489e700998a972bf0, type: 3}
   fireAltar: {fileID: 8097435480962943871, guid: 6343787aae90b2e4c8c352208ee94656, type: 3}
+  fireAltarAmount: 1
   iceAltar: {fileID: 8097435480962943871, guid: a0a6f3ece99151f4ba30835e8b13bc32, type: 3}
+  iceAltarAmount: 1
   healingPoint: {fileID: 2869497886820431816, guid: df3b9c33c45244545b624a5ab2f547dd, type: 3}
   coin: {fileID: 8478256650816996837, guid: 6aaf9b3e270a67348968c1bd2196310b, type: 3}
   stopGeneration: 0
   layerToCheck:
     serializedVersion: 2
-    m_Bits: 0
-  checkDistance: 0
-  spawnPlaces: []
+    m_Bits: 128
 --- !u!1 &457987779
 GameObject:
   m_ObjectHideFlags: 0

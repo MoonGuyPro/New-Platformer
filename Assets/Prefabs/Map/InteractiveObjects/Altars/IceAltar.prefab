@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 4156198913310012518}
   - component: {fileID: 407938956792734307}
   m_Layer: 9
-  m_Name: WindAltar
+  m_Name: IceAltar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -5969,9 +5969,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8500d4c9def8d14b89d50826ac1269e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 1787277071871187912, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
   meleeEnemyPrefab: {fileID: 5990034010468257128, guid: 95128b823ea67c94097e5f2d7e2f4ba5, type: 3}
   rangeEnemyPrefab: {fileID: 5805560536809627479, guid: 5eb7fb004a1bb2b47b744d9af4407d3c, type: 3}
+  movingSawPrefab: {fileID: 3541471747646952182, guid: 8a72003004d88d74da8533ff77fed6e3, type: 3}
+  spikesPrefab: {fileID: 3919585528464513862, guid: ee61a9026e77c254080109e0f0f8241b, type: 3}
+  safeTilesRatio: 0.446
 --- !u!114 &450002942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5991,7 +5993,9 @@ MonoBehaviour:
   iceAltar: {fileID: 8097435480962943871, guid: a0a6f3ece99151f4ba30835e8b13bc32, type: 3}
   iceAltarAmount: 1
   healingPoint: {fileID: 2869497886820431816, guid: df3b9c33c45244545b624a5ab2f547dd, type: 3}
+  healingPointsAmount: 2
   coin: {fileID: 8478256650816996837, guid: 6aaf9b3e270a67348968c1bd2196310b, type: 3}
+  coinsAmount: 15
   stopGeneration: 0
   layerToCheck:
     serializedVersion: 2

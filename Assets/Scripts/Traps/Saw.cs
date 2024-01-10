@@ -48,7 +48,6 @@ public class Saw : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            Debug.Log("Wykryło");
             collision.GetComponent<Health>().TakeDamage(damage);
         }
     }

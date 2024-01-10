@@ -37,7 +37,6 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     public List<GameObject> generatedRandomRooms;
 
     private float timeBtwRoom;
-    private bool playerSpawned;
     private Direction direction;
     private int downCounter;
     
@@ -74,8 +73,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     private void Start()
     {
         loadingCanvas.enabled = true;   //loading screen
-        playerSpawned = false;
-        
+
         //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
         int randStartPos = Random.Range(0, startingPositions.Length);
         transform.position = startingPositions[randStartPos].position;

@@ -66,6 +66,9 @@ MonoBehaviour:
   type: 0
   roomType: 0
   roomNumber: 0
+  layerToCheck:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!61 &6588281745669392998
 BoxCollider2D:
   m_ObjectHideFlags: 0

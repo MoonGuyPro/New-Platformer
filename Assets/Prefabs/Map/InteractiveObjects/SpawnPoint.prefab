@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7285373822752351680}
   - component: {fileID: 7285373822752351683}
+  - component: {fileID: 2667604007580803064}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -84,3 +85,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2667604007580803064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7285373822752351682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 930c5c0b3d7520f4e8b9a193f3a87632, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 1787277071871187912, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
+  loadingCanvas: {fileID: 0}

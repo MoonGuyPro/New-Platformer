@@ -21,13 +21,17 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     [SerializeField] private GameObject iceAltar;
     [SerializeField] [Range(1, 3)] private int iceAltarAmount;
     [SerializeField] private GameObject healingPoint;
+    [SerializeField] [Range(1, 5)] private int healingPointsAmount;
     [SerializeField] private GameObject coin;
+    [SerializeField] [Range(1, 30)] private int coinsAmount;
 
     [HideInInspector] public bool stopGeneration;
-    
+
 
     [Header("Ground Variables")]    //Do sprawdzenia sąsiedztwa danego tilea
     [SerializeField] private LayerMask layerToCheck;
+    
+
 
     private NewLevelGeneratorTerrain generator;
     private SpawnRooms[] objectsWithSpawnRooms;
@@ -48,21 +52,19 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
     private void Update()
     {
-        
-        if (generator.stopGeneration && !stopGeneration)
+        if (MapGenerated() && !stopGeneration)
         {
             SetAllInteractiveObjects();
         }
     }
 
-    private bool mapGenerated()
+    private bool MapGenerated()
     {
-        objectsWithSpawnRooms = FindObjectsOfType<SpawnRooms>();
-        if (objectsWithSpawnRooms.Length == 0)
+        int roomsGeneratedNumber = generator.generatedRandomRooms.Count + generator.generatedRoomsOnPath.Count;
+        if (roomsGeneratedNumber == 16)
         {
             return true;
         }
-
         return false;
     }
 
@@ -70,9 +72,9 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     {
         //Najpierw spawn gracza i koniec poziomu
         firstRoom = generator.generatedRoomsOnPath[0];
-        SpawnObjectInRoom(firstRoom, spawnPoint);
+        SpawnObjectInRoom(firstRoom, spawnPoint, 1);
         lastRoom = generator.generatedRoomsOnPath[^1];
-        SpawnObjectInRoom(lastRoom, finishPoint);
+        SpawnObjectInRoom(lastRoom, finishPoint, 1);
         
         //Teraz ołtarze
         List<GameObject> roomsList = generator.generatedRandomRooms;    //Bierzemy pokoje poza główną ścieżką gracza
@@ -81,21 +83,47 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
             roomsList.AddRange(generator.generatedRoomsOnPath);
         }
         
-        SpawnManySameTypeObjects(fireAltar, fireAltarAmount, roomsList, true);
+        SpawnAltars(fireAltar, fireAltarAmount, roomsList, true);
         
-        SpawnManySameTypeObjects(iceAltar, iceAltarAmount, shorterList, false);     //tutaj z inną ograniczoną listą o te pokoje w ktorych jest juz ołtarz
-
-
+        SpawnAltars(iceAltar, iceAltarAmount, shorterList, false);     //tutaj z inną ograniczoną listą o te pokoje w ktorych jest juz ołtarz
+        
+        //Teraz pozostale obiekty takie jak coinsy i życia
+        //Najpierw zbieramy całą liste wolnych miejsc do spawnowania, a potem w nich losowo spawnujemy
+        SpawnCoinsAndHealing(roomsList);
+        
         stopGeneration = true;
     }
 
-    private void SpawnManySameTypeObjects(GameObject gameObject, int amount, List<GameObject> roomsList, bool shouldReturnList)
+    private void SpawnCoinsAndHealing(List<GameObject> roomsList)
+    {
+        List<GameObject> positionsToSpawn = new List<GameObject>();
+        foreach (GameObject room in roomsList)
+        {
+            List<GameObject> groundTilesInRoom = room.gameObject.GetComponent<Room>().FindGroundInRoom();
+            List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom);
+            positionsToSpawn.AddRange(placesToSpawnList);
+        }
+
+        for (int i = 0; i < coinsAmount; i++)
+        {
+            Vector2 spawnPosition = GetRandomPositionToSpawn(positionsToSpawn, 1);
+            Instantiate(coin, spawnPosition, Quaternion.identity);
+        }
+
+        for (int i = 0; i < healingPointsAmount; i++)
+        {
+            Vector2 spawnPosition = GetRandomPositionToSpawn(positionsToSpawn, 1);
+            Instantiate(healingPoint, spawnPosition, Quaternion.identity);
+        }
+    }
+
+    private void SpawnAltars(GameObject gameObject, int amount, List<GameObject> roomsList, bool shouldReturnList)
     {
         for (int i = 0; i <= amount; i++)       //Generujemy taką ilość jaką wybraliśmy w inspektorze
         {
             int index = Random.Range(0, roomsList.Count);       //Losujemy pokój w którym powstanie obiekt
             GameObject randomRoom = roomsList[index];
-            SpawnObjectInRoom(randomRoom, gameObject);
+            SpawnObjectInRoom(randomRoom, gameObject, (float)0.5);
             roomsList.Remove(roomsList[index]);
         }
 
@@ -104,36 +132,18 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     }
     
 
-    private void SpawnObjectInRoom(GameObject room, GameObject objectPrefab)
+    private void SpawnObjectInRoom(GameObject room, GameObject objectPrefab, float pivotAdjustment)
     {
-        List<GameObject> groundTilesInRoom = FindGroundInRoom(room);
-        List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom);
-        Vector2 spawnPosition = getRandomPositionToSpawn(placesToSpawnList);
-        Instantiate(objectPrefab, spawnPosition, quaternion.identity);
-    }
-
-    private List<GameObject> FindGroundInRoom(GameObject room)       //Znajduje obiekty terenu w pokoju i dodaje do listy
-    {
-        Vector2 center = room.transform.position;
-
-        List<GameObject> groundTilesInRoom = new List<GameObject>();
-
-        Collider2D[] hits = Physics2D.OverlapBoxAll(center, roomSize, 0, layerToCheck);
-        
-        foreach (Collider2D hit in hits)
+        List<GameObject> groundTilesInRoom = room.gameObject.GetComponent<Room>().FindGroundInRoom();
+        if (groundTilesInRoom.Count != 0)
         {
-            // Sprawdź, czy trafienie to nie ten sam obiekt
-            if (hit.gameObject != gameObject)
-            {
-                groundTilesInRoom.Add(hit.gameObject);
-            }
+            List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom);
+            Vector2 spawnPosition = GetRandomPositionToSpawn(placesToSpawnList, pivotAdjustment);
+            Instantiate(objectPrefab, spawnPosition, quaternion.identity);
         }
-        
-        // Znaleźliśmy obiekty ziemi, teraz szukamy wolnych miejsc
-        return groundTilesInRoom;
     }
 
-    private List<GameObject> FindPlacesToSpawn(List<GameObject> groundTilesList)    //Mając liste terenu znajduje teren nad którym jest wolne miejsce i zwracam liste z tymi miejscami
+    public List<GameObject> FindPlacesToSpawn(List<GameObject> groundTilesList)    //Mając liste terenu znajduje teren nad którym jest wolne miejsce i zwracam liste z tymi miejscami
     {
         List<GameObject> placesToSpawnList = new List<GameObject>();
         
@@ -167,13 +177,13 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         return null;
     }
 
-    private Vector2 getRandomPositionToSpawn(List<GameObject> gameObjects)
+    public Vector2 GetRandomPositionToSpawn(List<GameObject> gameObjects, float pivotAdjustment)
     {
         Vector2 position = new Vector2();
 
         int index = Random.Range(0, gameObjects.Count);
         GameObject choosed = gameObjects[index];
-        position = new Vector2(choosed.transform.position.x, choosed.transform.position.y + 1); //dodaje ponieważ gameobject ma pozycje ziemi nad którą jest miejsce
+        position = new Vector2(choosed.transform.position.x, choosed.transform.position.y + pivotAdjustment); //dodaje ponieważ gameobject ma pozycje ziemi nad którą jest miejsce
 
         return position;
     }

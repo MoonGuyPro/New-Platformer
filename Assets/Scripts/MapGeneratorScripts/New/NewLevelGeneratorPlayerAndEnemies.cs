@@ -63,7 +63,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     {
         meleeEnemy = new Enemies(meleeEnemyPrefab, 0.25, 3, (float)1.2);
         rangedEnemy = new Enemies(rangeEnemyPrefab, 0.25, 3, (float)1.2);
-        sawTrap = new Enemies(movingSawPrefab, 0.25, 7, (float)0.5);
+        sawTrap = new Enemies(movingSawPrefab, 0.25, 7, (float)0.6);
         spikesTrap = new Enemies(spikesPrefab, 0.25, 1,(float) 1.2);
         enemiesList = new List<Enemies>
         {

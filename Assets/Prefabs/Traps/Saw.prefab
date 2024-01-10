@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7401595241862005290
 SpriteRenderer:
@@ -164,6 +164,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a404a34051d2bf64ca7e1be193de5203, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 1
   speed: 4
-  movementDistance: 3
+  boxCollider: {fileID: 4932351434088923140}
+  detectionLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  frontDetectionDistance: 0.5
+  groundDetectionDistance: 0.5

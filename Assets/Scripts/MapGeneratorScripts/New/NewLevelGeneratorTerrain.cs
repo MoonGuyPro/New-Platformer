@@ -44,8 +44,14 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     
     private GameObject choosedRoom;
     private GameObject newRoom;
-    
-    
+
+    private Vector2 currentPosition;
+    private int currentRow = 0;
+    private int roomsInPathSpawned;
+    private NewDirection newDirection;
+    private bool firstRoomSpawned = false;
+
+
     public enum RoomType        //określa wyjścia z danego pokoju
     {
         LR,
@@ -53,13 +59,6 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         LRT,
         LRBT
     }
-
-    /*[Serializable]
-    public class DirectionProbability
-    {
-        public Direction direction;
-        public float probability;
-    }*/
 
     public enum Direction
     {
@@ -70,18 +69,38 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         Down
     }
 
+    public enum NewDirection
+    {
+        Right,
+        Left,
+        Down
+    }
+
+    private List<NewDirection> directionsList;
+    private int randStartPos;
+    private bool skip;
     private void Start()
     {
         loadingCanvas.enabled = true;   //loading screen
-
-        //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
-        int randStartPos = Random.Range(0, startingPositions.Length);
-        transform.position = startingPositions[randStartPos].position;
-        int rand = Random.Range(0, startingRooms.Length);
-        newRoom = Instantiate(rooms[rand], transform.position, Quaternion.identity);
-        generatedRoomsOnPath.Add(newRoom);
-        direction = RandomEnumValue<Direction>(0);
+        firstRoomSpawned = false;
+        directionsList = new List<NewDirection>();
+        if (randomNumberOfRooms)
+        {
+            //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
+            randStartPos = Random.Range(0, startingPositions.Length);
+            transform.position = startingPositions[randStartPos].position;
+            int rand = Random.Range(0, rooms.Length);
+            newRoom = Instantiate(rooms[rand], transform.position, Quaternion.identity);
+            generatedRoomsOnPath.Add(newRoom);
+            direction = RandomEnumValue<Direction>(0);
         
+            //Kod do nowego generowania
+            currentPosition = transform.position;
+            numberOfRoomsInPath--;
+            skip = false;
+            
+        }
+
     }
 
     private void Update()
@@ -107,6 +126,202 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     private void ProceduralRoomsGenerator()
     {
         
+        if (numberOfRoomsInPath > 0)
+        {
+            switch (currentRow)
+            {
+                case 0:
+                    if (numberOfRoomsInPath != 16 && !firstRoomSpawned)
+                    {
+                        SpawnFirstRoom();
+                    }
+                    ChooseDirectionBasedOnTheRow(currentRow);
+                    break;
+                case 1:
+                    ChooseDirectionBasedOnTheRow(currentRow);
+                    break;
+                case 2:
+                    ChooseDirectionBasedOnTheRow(currentRow);
+                    break;
+                case 3:
+                    ChooseDirectionBasedOnTheRow(currentRow);
+                    break;
+                
+            }
+
+            if (!skip)
+            {
+                ApplyMovement();
+                // Spawn pokoju na nowej pozycji
+                int number = 16 - (currentRow) * 4;
+                if (numberOfRoomsInPath == number && newDirection == NewDirection.Down)
+                {
+                    FillTheRow(currentRow);
+                }
+                else
+                {
+                    int rand1 = Random.Range(0, rooms.Length);
+                    newRoom = Instantiate(rooms[rand1], currentPosition, Quaternion.identity);
+                    generatedRoomsOnPath.Add(newRoom);
+                    numberOfRoomsInPath--;
+                }
+
+            }
+            
+        }
+        else
+        {
+            stopGeneration = true;
+        }
+
+
+    }
+    
+    private void SpawnFirstRoom()
+    {
+        if (numberOfRoomsInPath is 15 or 14)
+        {
+            randStartPos = Random.Range(0, 2);
+            if (randStartPos == 0)
+                newDirection = NewDirection.Right;
+            else
+                newDirection = NewDirection.Left;
+        }
+        else
+        {
+            //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
+            randStartPos = Random.Range(0, startingPositions.Length);
+            newDirection = (NewDirection)Random.Range(0, 3);
+        }
+        currentPosition = startingPositions[randStartPos].position;
+        int rand = Random.Range(0, rooms.Length);
+        newRoom = Instantiate(rooms[rand], currentPosition, Quaternion.identity);
+        generatedRoomsOnPath.Add(newRoom);
+
+        //Kod do nowego generowania
+        numberOfRoomsInPath--;
+        skip = false;
+        firstRoomSpawned = true;
+
+    }
+
+    private void ChooseDirectionBasedOnTheRow(int row)
+    {
+        int number = 16 - (row) * 4;
+        if (numberOfRoomsInPath == number)
+        {
+            FillTheRow(row);
+            Debug.Log(numberOfRoomsInPath);
+        }
+        else if (numberOfRoomsInPath > number - 4)
+        {
+            Debug.Log("Nielosowy");
+            if (newDirection == NewDirection.Down)
+            {
+                if (currentPosition.x <= 5)
+                {
+                    newDirection = NewDirection.Right;
+                }
+                else if (currentPosition.x >= 15)
+                {
+                    newDirection = NewDirection.Left;
+                }
+            }
+            else if (newDirection == NewDirection.Right)
+            {
+                newDirection = NewDirection.Right;
+            }
+            else
+            {
+                newDirection = NewDirection.Left;
+            }
+
+            skip = false;
+        }
+        else if (numberOfRoomsInPath <= number - 4)
+        {
+            if (newDirection == NewDirection.Left)
+            {
+                newDirection = (NewDirection)Random.Range(1, 3);
+            }
+            else if (newDirection == NewDirection.Right)
+            {
+                directionsList.Add(NewDirection.Right);
+                directionsList.Add(NewDirection.Down);
+                int index = Random.Range(0, directionsList.Count);
+                newDirection = directionsList[index];
+                directionsList.Clear();
+            }
+            Debug.Log("Losowy");
+            skip = false;
+        }
+        
+    }
+
+    private void FillTheRow(int rowNumber) // Wypełnia cały rząd
+    {
+        Debug.Log("FillRow");
+        int startPos = Random.Range(0, 2);
+        currentPosition = new Vector2(startingPositions[startPos].position.x, startingPositions[startPos].position.y - (10 * rowNumber));
+
+        for (int i = 0; i < 4; i++)
+        {
+            int rand = Random.Range(0, rooms.Length);
+            newRoom = Instantiate(rooms[rand], currentPosition, Quaternion.identity);
+            generatedRoomsOnPath.Add(newRoom);
+            numberOfRoomsInPath--;
+            Debug.Log(numberOfRoomsInPath);
+            if (startPos == 0)
+            {
+                currentPosition.x += moveAmount;
+            }
+            else
+            {
+                currentPosition.x -= moveAmount;
+            }
+        }
+        currentPosition.y -= moveAmount;
+        currentRow++; // Zwiększamy numer rzędu
+        skip = true;
+    }
+
+    private void ApplyMovement()
+    {
+        switch (newDirection)
+        {
+            case NewDirection.Right:
+                if (currentPosition.x < maxX)
+                {
+                    currentPosition.x += moveAmount;
+                }
+                else
+                {
+                    newDirection = NewDirection.Down; // Jeśli jesteśmy na krawędzi, idziemy w dół
+                    currentPosition.y -= moveAmount;
+                    currentRow++;
+                }
+                break;
+            case NewDirection.Left:
+                if (currentPosition.x > minX)
+                {
+                    currentPosition.x -= moveAmount;
+                }
+                else
+                {
+                    newDirection = NewDirection.Down; // Jeśli jesteśmy na krawędzi, idziemy w dół
+                    currentPosition.y -= moveAmount;
+                    currentRow++;
+                }
+                break;
+
+            case NewDirection.Down:
+                if (currentPosition.y > minY)
+                {
+                    currentPosition.y -= moveAmount;
+                    currentRow++; // Zwiększamy numer rzędu
+                }
+                break;
+        }
     }
 
     private void RoomsGenerator()

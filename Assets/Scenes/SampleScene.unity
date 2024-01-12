@@ -6115,8 +6115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e517e62e50fe446b22fccf4bac6512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomNumberOfRooms: 1
-  numberOfRoomsInPath: 0
+  randomNumberOfRooms: 0
+  numberOfRoomsInPath: 15
   rooms:
   - {fileID: 2392433782185987647, guid: 961b5ddac6e4f9e4cb4096a16696a913, type: 3}
   - {fileID: 5190515848756938434, guid: c6672cffa3e5e434db19ab8ef4ffd47c, type: 3}
@@ -6124,9 +6124,9 @@ MonoBehaviour:
   - {fileID: 7370463381009780487, guid: 691b8773d514e8544b6545f67780ad09, type: 3}
   startingPositions:
   - {fileID: 1722810325}
-  - {fileID: 2055954324}
-  - {fileID: 441491121}
   - {fileID: 757736822}
+  - {fileID: 441491121}
+  - {fileID: 2055954324}
   startingRooms: []
   loadingCanvas: {fileID: 775637110}
   roomLayer:

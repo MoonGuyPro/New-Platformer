@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4932351434088923140}
   - component: {fileID: 8886711862898513225}
   - component: {fileID: 57985130149275842}
+  - component: {fileID: 8709115197700105218}
   m_Layer: 10
   m_Name: Saw
   m_TagString: Untagged
@@ -171,3 +172,16 @@ MonoBehaviour:
     m_Bits: 128
   frontDetectionDistance: 0.5
   groundDetectionDistance: 0.5
+--- !u!114 &8709115197700105218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3541471747646952182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad91ed10d6fe96641b370115ebb8240f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1

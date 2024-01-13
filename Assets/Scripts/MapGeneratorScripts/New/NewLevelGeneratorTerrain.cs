@@ -49,7 +49,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     private int currentRow = 0;
     private int roomsInPathSpawned;
     private NewDirection newDirection;
-    private bool firstRoomSpawned = false;
+    private bool firstRoomSpawned;
 
 
     public enum RoomType        //określa wyjścia z danego pokoju
@@ -211,11 +211,9 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         if (numberOfRoomsInPath == number)
         {
             FillTheRow(row);
-            Debug.Log(numberOfRoomsInPath);
         }
         else if (numberOfRoomsInPath > number - 4)
         {
-            Debug.Log("Nielosowy");
             if (newDirection == NewDirection.Down)
             {
                 if (currentPosition.x <= 5)
@@ -252,7 +250,6 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                 newDirection = directionsList[index];
                 directionsList.Clear();
             }
-            Debug.Log("Losowy");
             skip = false;
         }
         
@@ -260,17 +257,29 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
 
     private void FillTheRow(int rowNumber) // Wypełnia cały rząd
     {
-        Debug.Log("FillRow");
         int startPos = Random.Range(0, 2);
         currentPosition = new Vector2(startingPositions[startPos].position.x, startingPositions[startPos].position.y - (10 * rowNumber));
 
         for (int i = 0; i < 4; i++)
         {
-            int rand = Random.Range(0, rooms.Length);
-            newRoom = Instantiate(rooms[rand], currentPosition, Quaternion.identity);
-            generatedRoomsOnPath.Add(newRoom);
+            if (i == 3)
+            {
+                choosedRoom = GetRandomRoomWithType(RoomType.LRB);        
+            }
+            else
+            {
+                choosedRoom = GetRandomRoomWithType(RoomType.LR);
+                
+            }
+
+            if (generatedRoomsOnPath.Count != 0 && generatedRoomsOnPath[^1].gameObject.GetComponent<Room>().roomType is RoomType.LRB or RoomType.LRBT )
+            {
+                choosedRoom = GetRandomRoomWithType(RoomType.LRT);
+            }
+            
             numberOfRoomsInPath--;
-            Debug.Log(numberOfRoomsInPath);
+            newRoom = Instantiate(choosedRoom, currentPosition, Quaternion.identity);       //Tworzymy pokój
+            generatedRoomsOnPath.Add(newRoom);
             if (startPos == 0)
             {
                 currentPosition.x += moveAmount;
@@ -281,7 +290,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
             }
         }
         currentPosition.y -= moveAmount;
-        currentRow++; // Zwiększamy numer rzędu
+        currentRow++;
         skip = true;
     }
 

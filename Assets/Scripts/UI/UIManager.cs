@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject winScreen;
 
     public void Restart()
     {
@@ -17,6 +18,11 @@ public class UIManager : MonoBehaviour
     {
         Application.Quit(); //Quits the game in play mode
         UnityEditor.EditorApplication.isPlaying = false; //exits play mode
+    }
+
+    public void PlayerWon()
+    {
+        winScreen.SetActive(true);
     }
 
     public void GameOver()

@@ -17,22 +17,19 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     [SerializeField] private GameObject finishPoint;
     [SerializeField] private GameObject spawnPoint;
     [SerializeField] private GameObject fireAltar;
-    [SerializeField] [Range(1, 3)] private int fireAltarAmount;
+    private int fireAltarAmount;
     [SerializeField] private GameObject iceAltar;
-    [SerializeField] [Range(1, 3)] private int iceAltarAmount;
+    private int iceAltarAmount;
     [SerializeField] private GameObject healingPoint;
-    [SerializeField] [Range(1, 5)] private int healingPointsAmount;
+    private int healingPointsAmount;
     [SerializeField] private GameObject coin;
-    [SerializeField] [Range(1, 30)] private int coinsAmount;
+    private int coinsAmount;
 
     [HideInInspector] public bool stopGeneration;
-
-
+    
     [Header("Ground Variables")]    //Do sprawdzenia sąsiedztwa danego tilea
     [SerializeField] private LayerMask layerToCheck;
     
-
-
     private NewLevelGeneratorTerrain generator;
     private SpawnRooms[] objectsWithSpawnRooms;
     private GameObject firstRoom;
@@ -41,10 +38,17 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     private Vector2 roomSize;   //Do określenia rozmiaru pokoju
 
     private List<GameObject> shorterList;       //lista w której nie am pokoi w ktorych zostały zespawnowane obiekty, potrzebna przy ołtarzach by nie powtarzac pokoju
+    private NewLevelGenerator _newLevelGenerator;
 
 
     private void Start()
     {
+        _newLevelGenerator = FindObjectOfType<NewLevelGenerator>();
+        fireAltarAmount = _newLevelGenerator.fireAltarAmount;
+        iceAltarAmount = _newLevelGenerator.iceAltarAmount;
+        healingPointsAmount = _newLevelGenerator.healingPointsAmount;
+        coinsAmount = _newLevelGenerator.coinsAmount;
+        
         generator = FindObjectOfType<NewLevelGeneratorTerrain>();
         roomSize = new Vector2(9, 9);
         stopGeneration = false;

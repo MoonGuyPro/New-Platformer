@@ -19,7 +19,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     [SerializeField] private GameObject movingSawPrefab;
     [SerializeField] private GameObject spikesPrefab;
 
-    [SerializeField] [Range(0, 1)] private float safeTilesRatio;
+    private float safeTilesRatio;
 
     private NewLevelGeneratorTerrain terrainGenerator;
     private NewLevelGeneratorInteractiveObjects objectsGenerator;
@@ -49,9 +49,14 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     private Enemies sawTrap;
     private Enemies spikesTrap;
     private List<Enemies> enemiesList;
+    
+    private NewLevelGenerator _newLevelGenerator;
 
     private void Start()
     {
+        _newLevelGenerator = FindObjectOfType<NewLevelGenerator>();
+        safeTilesRatio = _newLevelGenerator.safeTilesRatio;
+        
         terrainGenerator = FindObjectOfType<NewLevelGeneratorTerrain>();
         objectsGenerator = FindObjectOfType<NewLevelGeneratorInteractiveObjects>();
         freeSpaces = new List<GameObject>();

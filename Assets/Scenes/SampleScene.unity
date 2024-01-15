@@ -6078,6 +6078,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 450002938}
+  - component: {fileID: 450002943}
   - component: {fileID: 450002940}
   - component: {fileID: 450002942}
   - component: {fileID: 450002941}
@@ -6116,7 +6117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   randomNumberOfRooms: 0
-  numberOfRoomsInPath: 7
   rooms:
   - {fileID: 2392433782185987647, guid: 961b5ddac6e4f9e4cb4096a16696a913, type: 3}
   - {fileID: 5190515848756938434, guid: c6672cffa3e5e434db19ab8ef4ffd47c, type: 3}
@@ -6136,7 +6136,7 @@ MonoBehaviour:
   maxX: 20.5
   minY: -5
   moveAmount: 10
-  startTimeBtwRoom: 4
+  startTimeBtwRoom: 0.25
   stopGeneration: 0
   generatedRoomsOnPath: []
   generatedRandomRooms: []
@@ -6156,7 +6156,6 @@ MonoBehaviour:
   rangeEnemyPrefab: {fileID: 5805560536809627479, guid: 5eb7fb004a1bb2b47b744d9af4407d3c, type: 3}
   movingSawPrefab: {fileID: 3541471747646952182, guid: 8a72003004d88d74da8533ff77fed6e3, type: 3}
   spikesPrefab: {fileID: 3919585528464513862, guid: ee61a9026e77c254080109e0f0f8241b, type: 3}
-  safeTilesRatio: 0.696
 --- !u!114 &450002942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6172,17 +6171,31 @@ MonoBehaviour:
   finishPoint: {fileID: 8265196597362927187, guid: 140d46bca5e98cd4791081f6879c13ed, type: 3}
   spawnPoint: {fileID: 7285373822752351682, guid: 697a52d2941180d489e700998a972bf0, type: 3}
   fireAltar: {fileID: 8097435480962943871, guid: 6343787aae90b2e4c8c352208ee94656, type: 3}
-  fireAltarAmount: 1
   iceAltar: {fileID: 8097435480962943871, guid: a0a6f3ece99151f4ba30835e8b13bc32, type: 3}
-  iceAltarAmount: 1
   healingPoint: {fileID: 2869497886820431816, guid: df3b9c33c45244545b624a5ab2f547dd, type: 3}
-  healingPointsAmount: 2
   coin: {fileID: 8478256650816996837, guid: 6aaf9b3e270a67348968c1bd2196310b, type: 3}
-  coinsAmount: 15
   stopGeneration: 0
   layerToCheck:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &450002943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 450002937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 518a309df1e4e6b43b85b199a2961386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numberOfRoomsInPath: 8
+  safeTilesRatio: 0.663
+  fireAltarAmount: 2
+  iceAltarAmount: 1
+  healingPointsAmount: 2
+  coinsAmount: 30
 --- !u!1 &457987779
 GameObject:
   m_ObjectHideFlags: 0

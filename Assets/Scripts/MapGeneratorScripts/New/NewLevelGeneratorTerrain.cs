@@ -15,7 +15,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
 {
     [Header("MAIN SETTING")] 
     [SerializeField] private bool randomNumberOfRooms;
-    [SerializeField] private int numberOfRoomsInPath;
+    private int numberOfRoomsInPath;
     
     [Header("Assignments")]
     public  GameObject[] rooms;
@@ -80,9 +80,13 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     private int randStartPos;
     private bool skip;
     private RoomType[] roomTypes = { RoomType.LR, RoomType.LRB, RoomType.LRT, RoomType.LRBT };
-
+    
+    private NewLevelGenerator _newLevelGenerator;
     private void Start()
     {
+        _newLevelGenerator = FindObjectOfType<NewLevelGenerator>();
+        numberOfRoomsInPath = _newLevelGenerator.numberOfRoomsInPath;
+        
         loadingCanvas.enabled = true;   //loading screen
         firstRoomSpawned = false;
         directionsList = new List<NewDirection>();
@@ -252,7 +256,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         {
             if (newDirection == NewDirection.Left)
             {
-                newDirection = (NewDirection)Random.Range(1, 3);
+                newDirection = (NewDirection)Random.Range(1, 3);    
             }
             else if (newDirection == NewDirection.Right)
             {
@@ -262,6 +266,10 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                 newDirection = directionsList[index];
                 directionsList.Clear();
             }
+            else
+            {
+                newDirection = (NewDirection)Random.Range(0, 2);        //Tylko lewo i prawo
+            }
             skip = false;
         }
         
@@ -269,7 +277,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
 
     private void FillTheRow(int rowNumber) // Wypełnia cały rząd
     {
-        int numberOfRoom = 0;
+        int numberOfRoom = 3;
         int startPos;
         if (numberOfRoomsInPath == 16)
         {
@@ -278,26 +286,25 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         }
         else
         {
-            startPos = 0;
-            currentPosition = new Vector2(startingPositions[0].position.x, startingPositions[0].position.y - (10 * rowNumber));
             switch (Math.Round(generatedRoomsOnPath[^1].transform.position.x))
             {
                 case (-5):
-                    numberOfRoom = 3;
+                    startPos = 0;       //zaczuna od lewej
                     break;
                 case 5:
-                    numberOfRoom = 3;
+                    startPos = 0;
                     break;
                 case 15:
-                    numberOfRoom = 0;
+                    startPos = 1;       //zaczyna od prawej
                     break;
                 case 25:
-                    numberOfRoom = 0;
+                    startPos = 1;
                     break;
                 default:
-                    numberOfRoom = 0;
+                    startPos = 1;
                     break;
             }
+            currentPosition = new Vector2(startingPositions[startPos].position.x, startingPositions[startPos].position.y - (10 * rowNumber));
         }
 
         for (int i = 0; i < 4; i++)

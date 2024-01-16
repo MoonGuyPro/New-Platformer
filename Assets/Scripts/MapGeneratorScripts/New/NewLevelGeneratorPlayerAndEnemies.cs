@@ -98,7 +98,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         foreach (GameObject room in roomsList)      //dodajemy do listy wszystkie znalezione wolne tile
         {
             List<GameObject> groundPositions = room.gameObject.GetComponent<Room>().FindGroundInRoom();
-            freeSpaces.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions));
+            freeSpaces.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Normal));
         }
 
         int safeTiles;          //liczba tileów bezpiecznych i niebezpiecznych

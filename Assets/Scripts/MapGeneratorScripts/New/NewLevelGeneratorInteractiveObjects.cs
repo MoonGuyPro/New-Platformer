@@ -40,7 +40,12 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     private List<GameObject> shorterList;       //lista w której nie am pokoi w ktorych zostały zespawnowane obiekty, potrzebna przy ołtarzach by nie powtarzac pokoju
     private NewLevelGenerator _newLevelGenerator;
 
-
+    public enum SpawnPointType
+    {
+        Normal,
+        Altar
+    }
+    
     private void Start()
     {
         _newLevelGenerator = FindObjectOfType<NewLevelGenerator>();
@@ -76,9 +81,9 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     {
         //Najpierw spawn gracza i koniec poziomu
         firstRoom = generator.generatedRoomsOnPath[0];
-        SpawnObjectInRoom(firstRoom, spawnPoint, 1);
+        SpawnObjectInRoom(firstRoom, spawnPoint, 1, SpawnPointType.Normal);
         lastRoom = generator.generatedRoomsOnPath[^1];
-        SpawnObjectInRoom(lastRoom, finishPoint, 1);
+        SpawnObjectInRoom(lastRoom, finishPoint, 1, SpawnPointType.Normal);
         
         //Teraz ołtarze
         List<GameObject> roomsList = generator.generatedRandomRooms;    //Bierzemy pokoje poza główną ścieżką gracza
@@ -104,7 +109,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         foreach (GameObject room in roomsList)
         {
             List<GameObject> groundTilesInRoom = room.gameObject.GetComponent<Room>().FindGroundInRoom();
-            List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom);
+            List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom, SpawnPointType.Normal);
             positionsToSpawn.AddRange(placesToSpawnList);
         }
 
@@ -127,7 +132,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         {
             int index = Random.Range(0, roomsList.Count);       //Losujemy pokój w którym powstanie obiekt
             GameObject randomRoom = roomsList[index];
-            SpawnObjectInRoom(randomRoom, gameObject, (float)0.5);
+            SpawnObjectInRoom(randomRoom, gameObject, (float)0.5, SpawnPointType.Altar);
             roomsList.Remove(roomsList[index]);
         }
 
@@ -136,26 +141,48 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     }
     
 
-    private void SpawnObjectInRoom(GameObject room, GameObject objectPrefab, float pivotAdjustment)
+    private void SpawnObjectInRoom(GameObject room, GameObject objectPrefab, float pivotAdjustment, SpawnPointType type)
     {
         List<GameObject> groundTilesInRoom = room.gameObject.GetComponent<Room>().FindGroundInRoom();
         if (groundTilesInRoom.Count != 0)
         {
-            List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom);
+            List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom, type);
             Vector2 spawnPosition = GetRandomPositionToSpawn(placesToSpawnList, pivotAdjustment);
             Instantiate(objectPrefab, spawnPosition, quaternion.identity);
         }
     }
 
-    public List<GameObject> FindPlacesToSpawn(List<GameObject> groundTilesList)    //Mając liste terenu znajduje teren nad którym jest wolne miejsce i zwracam liste z tymi miejscami
+    private bool SpawnPointsController(SpawnPointType type, GameObject obj)     //Metoda która zapewnia odpowiedni rodzaj spawnu dla konkretnego obiektu - np. dla Altaru potrzebne są 2 miejsca wolne wzwyż
+    {
+        Vector2 position = obj.transform.position;
+        switch (type)
+        {
+           case SpawnPointType.Normal:
+               GameObject check = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 1));
+               if (check == null)
+                   return true;
+               return false;
+           case SpawnPointType.Altar:
+               GameObject check1 = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 1));
+               GameObject check2 = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 2));
+               GameObject check3 = CheckNeighbourAtPosition(new Vector2(position.x - 1, position.y + 1));
+               GameObject check4 = CheckNeighbourAtPosition(new Vector2(position.x + 1, position.y + 1));
+               if (check1 == null && check2 == null && check3 == null && check4 == null)
+                   return true;
+               return false;
+           default:
+               return false;
+        }
+
+    }
+
+    public List<GameObject> FindPlacesToSpawn(List<GameObject> groundTilesList, SpawnPointType type)    //Mając liste terenu znajduje teren nad którym jest wolne miejsce i zwracam liste z tymi miejscami
     {
         List<GameObject> placesToSpawnList = new List<GameObject>();
         
         foreach (GameObject obj in groundTilesList)
         {
-            var position = obj.transform.position;
-            GameObject check = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 1));
-            if (check == null)
+            if (SpawnPointsController(type, obj))
             {
                 placesToSpawnList.Add(obj);
             }

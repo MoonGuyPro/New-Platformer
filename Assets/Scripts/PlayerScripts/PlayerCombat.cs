@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -101,5 +102,8 @@ public class PlayerCombat : MonoBehaviour
     {
         uiManager.GameOver();
         Time.timeScale = 0f;
+        string folderPath = Path.Combine(Application.dataPath, "..");
+        string filePath = Path.Combine(folderPath, "heatMap_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png");
+        playerMovement.SaveHeatMapToFile(playerMovement.heatMapTexture, filePath);
     }
 }

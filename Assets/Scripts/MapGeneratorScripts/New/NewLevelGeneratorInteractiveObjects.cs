@@ -43,7 +43,8 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     public enum SpawnPointType
     {
         Normal,
-        Altar
+        Altar,
+        Enemies
     }
     
     private void Start()
@@ -115,13 +116,17 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
         for (int i = 0; i < coinsAmount; i++)
         {
-            Vector2 spawnPosition = GetRandomPositionToSpawn(positionsToSpawn, 1);
+            GameObject spawnPoint = GetRandomPositionToSpawn(positionsToSpawn);
+            Vector2 spawnPosition = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + 1);
+            positionsToSpawn.Remove(spawnPoint);
             Instantiate(coin, spawnPosition, Quaternion.identity);
         }
 
         for (int i = 0; i < healingPointsAmount; i++)
         {
-            Vector2 spawnPosition = GetRandomPositionToSpawn(positionsToSpawn, 1);
+            GameObject spawnPoint = GetRandomPositionToSpawn(positionsToSpawn);
+            Vector2 spawnPosition = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + 1);
+            positionsToSpawn.Remove(spawnPoint);
             Instantiate(healingPoint, spawnPosition, Quaternion.identity);
         }
     }
@@ -147,7 +152,9 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         if (groundTilesInRoom.Count != 0)
         {
             List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom, type);
-            Vector2 spawnPosition = GetRandomPositionToSpawn(placesToSpawnList, pivotAdjustment);
+            GameObject spawnPoint = GetRandomPositionToSpawn(placesToSpawnList);
+            Vector2 spawnPosition = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + pivotAdjustment);
+            placesToSpawnList.Remove(spawnPoint);
             Instantiate(objectPrefab, spawnPosition, quaternion.identity);
         }
     }
@@ -167,10 +174,12 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
                GameObject check2 = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 2));
                GameObject check3 = CheckNeighbourAtPosition(new Vector2(position.x - 1, position.y + 1));
                GameObject check4 = CheckNeighbourAtPosition(new Vector2(position.x + 1, position.y + 1));
-               if (check1 == null && check2 == null && check3 == null && check4 == null)
+               GameObject check5 = CheckNeighbourAtPosition(new Vector2(position.x - 1, position.y));
+               GameObject check6 = CheckNeighbourAtPosition(new Vector2(position.x + 1, position.y));
+                if (check1 == null && check2 == null && check3 == null && check4 == null && check5 != null && check6 != null)
                    return true;
                return false;
-           default:
+            default:
                return false;
         }
 
@@ -198,25 +207,23 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
     }
     
-    GameObject CheckNeighbourAtPosition(Vector2 position)
+    public GameObject CheckNeighbourAtPosition(Vector2 position)
     {
-        Collider2D collider = Physics2D.OverlapPoint(position);
+        Collider2D collider = Physics2D.OverlapPoint(position, layerToCheck);
         if (collider != null)
         {
+            //Debug.Log(collider.gameObject.name);
             return collider.gameObject;
         }
         return null;
     }
 
-    public Vector2 GetRandomPositionToSpawn(List<GameObject> gameObjects, float pivotAdjustment)
+    public GameObject GetRandomPositionToSpawn(List<GameObject> gameObjects)
     {
-        Vector2 position = new Vector2();
-
         int index = Random.Range(0, gameObjects.Count);
         GameObject choosed = gameObjects[index];
-        position = new Vector2(choosed.transform.position.x, choosed.transform.position.y + pivotAdjustment); //dodaje ponieważ gameobject ma pozycje ziemi nad którą jest miejsce
 
-        return position;
+        return choosed;
     }
 
 }

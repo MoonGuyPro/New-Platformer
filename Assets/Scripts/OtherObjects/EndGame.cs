@@ -13,5 +13,6 @@ public class EndGame : MonoBehaviour
             UIManager uiManager = FindObjectOfType<UIManager>();
             uiManager.PlayerWon();
         }
+        Time.timeScale = 0f;
     }
 }

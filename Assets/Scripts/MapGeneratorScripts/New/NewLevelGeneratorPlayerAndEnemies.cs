@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,21 +26,19 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     private NewLevelGeneratorInteractiveObjects objectsGenerator;
     private bool stopGenerator;
 
-    private List<GameObject> freeSpaces;
+    private List<GameObject> freeSpaces;        //Dla przeciwników i kręcącego koła
 
     [Serializable]
     public class Enemies
     {
         public GameObject typeOfEnemy;
         public double probability;
-        public int numberOfTiles;
         public float pivotAdjustment;
 
-        public Enemies(GameObject _typeOfEnemy, double _probability, int _numberOfTiles, float _pivotAdjustment)
+        public Enemies(GameObject _typeOfEnemy, double _probability, float _pivotAdjustment)
         {
             typeOfEnemy = _typeOfEnemy;
             probability = _probability;
-            numberOfTiles = _numberOfTiles;
             pivotAdjustment = _pivotAdjustment;
         }
     }
@@ -66,10 +65,10 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
 
     private void SetStartingProbabilities()
     {
-        meleeEnemy = new Enemies(meleeEnemyPrefab, 0.25, 3, (float)1.2);
-        rangedEnemy = new Enemies(rangeEnemyPrefab, 0.25, 3, (float)1.2);
-        sawTrap = new Enemies(movingSawPrefab, 0.25, 7, (float)0.6);
-        spikesTrap = new Enemies(spikesPrefab, 0.25, 1,(float) 1.2);
+        meleeEnemy = new Enemies(meleeEnemyPrefab, 0.25, (float)1.2);
+        rangedEnemy = new Enemies(rangeEnemyPrefab, 0.25, (float)1.2);
+        sawTrap = new Enemies(movingSawPrefab, 0.25, (float)0.6);
+        spikesTrap = new Enemies(spikesPrefab, 0.25,(float) 1.2);
         enemiesList = new List<Enemies>
         {
             meleeEnemy,
@@ -92,8 +91,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     {
         List<GameObject> roomsList = new List<GameObject>();    //Dodaje wszystkie pokoje do listy
         roomsList.AddRange(terrainGenerator.generatedRandomRooms);
-        roomsList.AddRange(terrainGenerator.generatedRoomsOnPath);
-        
+        roomsList.AddRange(terrainGenerator.generatedRoomsOnPath.Skip(1));
+
 
         foreach (GameObject room in roomsList)      //dodajemy do listy wszystkie znalezione wolne tile
         {
@@ -111,17 +110,76 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         while (dangerousTiles > dangerousTilesFilled)
         {
             Enemies enemy = ChooseRandomEnemyOrTrap();
-            Vector2 position = objectsGenerator.GetRandomPositionToSpawn(freeSpaces, enemy.pivotAdjustment);
+            GameObject spawnPoint = objectsGenerator.GetRandomPositionToSpawn(freeSpaces);
+            Vector2 position = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + enemy.pivotAdjustment);
+            freeSpaces.Remove(spawnPoint);
             GameObject enemyPrefab = enemy.typeOfEnemy;
+
+            dangerousTilesFilled += NumberOfDangerousTiles(enemy, position, enemy.pivotAdjustment);
+
             Instantiate(enemyPrefab, position, Quaternion.identity);
-            
-            dangerousTilesFilled += enemy.numberOfTiles;
         }
 
         SpawnPlayer player = FindObjectOfType<SpawnPlayer>();
         player.PlayerSpawn();
         stopGenerator = true;
 
+    }
+
+    private int NumberOfDangerousTiles(Enemies enemy, Vector2 position, float pivot)
+    {
+        if(enemy == spikesTrap)
+        {
+            return 1;
+        }
+        else
+        {
+            int dangerousTilesNumber = 1;
+            Vector2 newPosLeft = new Vector2(position.x - 1, position.y - pivot + 1);
+            Vector2 newPosRight = new Vector2(position.x + 1, position.y - pivot + 1);
+            Vector2 newPosDownLeft = new Vector2(position.x - 1, position.y - pivot);
+            Vector2 newPosDownRight = new Vector2(position.x + 1, position.y - pivot);
+            bool checkLeft = false;
+            bool checkRight = false;
+
+
+            while (!checkLeft)
+            {
+                if (objectsGenerator.CheckNeighbourAtPosition(newPosLeft) != null || objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft) == null)
+                {
+                    checkLeft = true;
+                }
+                else
+                {
+                    dangerousTilesNumber++;
+                    newPosLeft.x -= 1;
+                    newPosDownLeft.x -= 1;
+                }
+            }
+
+            while (!checkRight)
+            {
+                if (objectsGenerator.CheckNeighbourAtPosition(newPosRight) != null || objectsGenerator.CheckNeighbourAtPosition(newPosDownRight) == null)
+                {
+                    checkRight = true;
+                }
+                else
+                {
+                    dangerousTilesNumber++;
+                    newPosRight.x += 1;
+                    newPosDownRight.x += 1;
+                }
+            }
+            Debug.Log("Pos " + position);
+            Debug.Log(enemy.typeOfEnemy + " " + dangerousTilesNumber);
+
+            if (dangerousTilesNumber > 6)
+                dangerousTilesNumber = 6;
+
+            return dangerousTilesNumber;
+            
+        }
+        
     }
     
     private Enemies ChooseRandomEnemyOrTrap()

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
@@ -80,7 +81,6 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
 
     private void Update()
     {
-        //Debug.Log(objectsGenerator.MapGenerated());
         if (objectsGenerator.stopGeneration && !stopGenerator && objectsGenerator.MapGenerated())
         {
             SpawnEnemiesAndTraps();
@@ -111,13 +111,17 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         {
             Enemies enemy = ChooseRandomEnemyOrTrap();
             GameObject spawnPoint = objectsGenerator.GetRandomPositionToSpawn(freeSpaces);
+            if (spawnPoint == null)
+            {
+                break;
+            }
             Vector2 position = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + enemy.pivotAdjustment);
-            freeSpaces.Remove(spawnPoint);
             GameObject enemyPrefab = enemy.typeOfEnemy;
 
             dangerousTilesFilled += NumberOfDangerousTiles(enemy, position, enemy.pivotAdjustment);
 
             Instantiate(enemyPrefab, position, Quaternion.identity);
+            freeSpaces.Remove(spawnPoint);
         }
 
         SpawnPlayer player = FindObjectOfType<SpawnPlayer>();
@@ -143,7 +147,10 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             bool checkRight = false;
 
 
-            while (!checkLeft)
+            int counter = 0; // Zmienna licznikowa
+            int maxIterations = 4; // Maksymalna liczba iteracji
+
+            while (!checkLeft && counter < maxIterations) // Dodanie warunku counter < maxIterations
             {
                 if (objectsGenerator.CheckNeighbourAtPosition(newPosLeft) != null || objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft) == null)
                 {
@@ -153,12 +160,16 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                 {
                     dangerousTilesNumber++;
                     newPosLeft.x -= 1;
+                    if (freeSpaces.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft)))
+                    {
+                        freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
+                    }
                     newPosDownLeft.x -= 1;
-                    freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
                 }
+                counter++; // Inkrementacja licznika
             }
-
-            while (!checkRight)
+            counter = 0;
+            while (!checkRight && counter < maxIterations)
             {
                 if (objectsGenerator.CheckNeighbourAtPosition(newPosRight) != null || objectsGenerator.CheckNeighbourAtPosition(newPosDownRight) == null)
                 {
@@ -168,9 +179,13 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                 {
                     dangerousTilesNumber++;
                     newPosRight.x += 1;
+                    if (freeSpaces.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight)))
+                    {
+                        freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight));
+                    }
                     newPosDownRight.x += 1;
-                    freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
                 }
+                counter++; // Inkrementacja licznika
             }
             Debug.Log("Pos " + position);
             Debug.Log(enemy.typeOfEnemy + " " + dangerousTilesNumber);
@@ -183,7 +198,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         }
         
     }
-    
+
+
     private Enemies ChooseRandomEnemyOrTrap()
     {
         double totalProbability = 0;
@@ -242,5 +258,6 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             }
         }
     }
+
 
 }

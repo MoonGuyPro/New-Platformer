@@ -94,10 +94,11 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         {
             roomsList.AddRange(generator.generatedRoomsOnPath);
         }
+
+        shorterList.AddRange(roomsList);
+        SpawnAltars(fireAltar, fireAltarAmount, shorterList);
         
-        SpawnAltars(fireAltar, fireAltarAmount, roomsList, true);
-        
-        SpawnAltars(iceAltar, iceAltarAmount, shorterList, false);     //tutaj z inną ograniczoną listą o te pokoje w ktorych jest juz ołtarz
+        SpawnAltars(iceAltar, iceAltarAmount, shorterList);     //tutaj z inną ograniczoną listą o te pokoje w ktorych jest juz ołtarz
         
         //Teraz pozostale obiekty takie jak coinsy i życia
         //Najpierw zbieramy całą liste wolnych miejsc do spawnowania, a potem w nich losowo spawnujemy
@@ -133,11 +134,8 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         }
     }
 
-    private void SpawnAltars(GameObject gameObject, int amount, List<GameObject> roomsList, bool shouldReturnList)
+    private void SpawnAltars(GameObject gameObject, int amount, List<GameObject> roomsList)
     {
-        if (shouldReturnList)
-            shorterList.AddRange(roomsList);
-
         for (int i = 0; i <= amount; i++)       //Generujemy taką ilość jaką wybraliśmy w inspektorze
         {
             int index = Random.Range(0, roomsList.Count);       //Losujemy pokój w którym powstanie obiekt
@@ -231,6 +229,12 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
     public GameObject GetRandomPositionToSpawn(List<GameObject> gameObjects)
     {
+        if (gameObjects.Count == 0)
+        {
+            Debug.LogError("Lista gameObjects jest pusta.");
+            return null;
+        }
+
         int index = Random.Range(0, gameObjects.Count);
         GameObject choosed = gameObjects[index];
 

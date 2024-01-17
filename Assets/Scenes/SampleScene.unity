@@ -6191,7 +6191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfRoomsInPath: 8
-  safeTilesRatio: 0
+  safeTilesRatio: 0.517
   fireAltarAmount: 2
   iceAltarAmount: 1
   healingPointsAmount: 2

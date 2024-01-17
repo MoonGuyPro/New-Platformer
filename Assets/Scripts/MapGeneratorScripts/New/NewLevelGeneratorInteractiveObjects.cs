@@ -54,6 +54,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         iceAltarAmount = _newLevelGenerator.iceAltarAmount;
         healingPointsAmount = _newLevelGenerator.healingPointsAmount;
         coinsAmount = _newLevelGenerator.coinsAmount;
+        shorterList = new List<GameObject>();
         
         generator = FindObjectOfType<NewLevelGeneratorTerrain>();
         roomSize = new Vector2(9, 9);
@@ -66,9 +67,10 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         {
             SetAllInteractiveObjects();
         }
+        
     }
 
-    private bool MapGenerated()
+    public bool MapGenerated()
     {
         int roomsGeneratedNumber = generator.generatedRandomRooms.Count + generator.generatedRoomsOnPath.Count;
         if (roomsGeneratedNumber == 16)
@@ -133,16 +135,18 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
     private void SpawnAltars(GameObject gameObject, int amount, List<GameObject> roomsList, bool shouldReturnList)
     {
+        if (shouldReturnList)
+            shorterList.AddRange(roomsList);
+
         for (int i = 0; i <= amount; i++)       //Generujemy taką ilość jaką wybraliśmy w inspektorze
         {
             int index = Random.Range(0, roomsList.Count);       //Losujemy pokój w którym powstanie obiekt
             GameObject randomRoom = roomsList[index];
             SpawnObjectInRoom(randomRoom, gameObject, (float)0.5, SpawnPointType.Altar);
-            roomsList.Remove(roomsList[index]);
+            shorterList.Remove(shorterList[index]);
         }
 
-        if (shouldReturnList)
-            shorterList = roomsList;
+
     }
     
 
@@ -179,6 +183,13 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
                 if (check1 == null && check2 == null && check3 == null && check4 == null && check5 != null && check6 != null)
                    return true;
                return false;
+            case SpawnPointType.Enemies:
+                GameObject check7 = CheckNeighbourAtPosition(new Vector2(position.x - 1, position.y + 1));
+                GameObject check9 = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 1));
+                GameObject check8 = CheckNeighbourAtPosition(new Vector2(position.x + 1, position.y + 1));
+                if (check7 == null && check8 == null && check9 == null)
+                    return true;
+                return false;
             default:
                return false;
         }

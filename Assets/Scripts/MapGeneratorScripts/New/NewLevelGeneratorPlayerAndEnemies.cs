@@ -80,7 +80,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
 
     private void Update()
     {
-        if (objectsGenerator.stopGeneration && !stopGenerator)
+        //Debug.Log(objectsGenerator.MapGenerated());
+        if (objectsGenerator.stopGeneration && !stopGenerator && objectsGenerator.MapGenerated())
         {
             SpawnEnemiesAndTraps();
         }
@@ -92,7 +93,6 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         List<GameObject> roomsList = new List<GameObject>();    //Dodaje wszystkie pokoje do listy
         roomsList.AddRange(terrainGenerator.generatedRandomRooms);
         roomsList.AddRange(terrainGenerator.generatedRoomsOnPath.Skip(1));
-
 
         foreach (GameObject room in roomsList)      //dodajemy do listy wszystkie znalezione wolne tile
         {
@@ -154,6 +154,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                     dangerousTilesNumber++;
                     newPosLeft.x -= 1;
                     newPosDownLeft.x -= 1;
+                    freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
                 }
             }
 
@@ -168,6 +169,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                     dangerousTilesNumber++;
                     newPosRight.x += 1;
                     newPosDownRight.x += 1;
+                    freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
                 }
             }
             Debug.Log("Pos " + position);

@@ -393,6 +393,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         Vector2 lastRoomPos = generatedRoomsOnPath[^1].gameObject.transform.position;
         generatedRoomsOnPath[^1].gameObject.GetComponent<Room>().RoomDestruction();
         generatedRoomsOnPath.RemoveAt(generatedRoomsOnPath.Count - 1);
+        Debug.Log("usunięty");
         newRoom = Instantiate(GetRandomRoomWithType(finalRoom), lastRoomPos, Quaternion.identity);
         generatedRoomsOnPath.Add(newRoom);
     }

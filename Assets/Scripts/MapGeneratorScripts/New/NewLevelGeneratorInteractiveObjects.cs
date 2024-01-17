@@ -183,9 +183,11 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
                return false;
             case SpawnPointType.Enemies:
                 GameObject check7 = CheckNeighbourAtPosition(new Vector2(position.x - 1, position.y + 1));
-                GameObject check9 = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 1));
                 GameObject check8 = CheckNeighbourAtPosition(new Vector2(position.x + 1, position.y + 1));
-                if (check7 == null && check8 == null && check9 == null)
+                GameObject check9 = CheckNeighbourAtPosition(new Vector2(position.x, position.y + 1));
+                GameObject check10 = CheckNeighbourAtPosition(new Vector2(position.x - 1, position.y));
+                GameObject check11 = CheckNeighbourAtPosition(new Vector2(position.x + 1, position.y));
+                if (check7 == null && check8 == null && check9 == null && check10 != null && check11 != null)
                     return true;
                 return false;
             default:

@@ -28,6 +28,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     private bool stopGenerator;
 
     private List<GameObject> freeSpaces;        //Dla przeciwników i kręcącego koła
+    private List<GameObject> enemiesAndSawSpawnPoints;
 
     [Serializable]
     public class Enemies
@@ -60,6 +61,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         terrainGenerator = FindObjectOfType<NewLevelGeneratorTerrain>();
         objectsGenerator = FindObjectOfType<NewLevelGeneratorInteractiveObjects>();
         freeSpaces = new List<GameObject>();
+        enemiesAndSawSpawnPoints = new List<GameObject>();
         stopGenerator = false;
         SetStartingProbabilities();
     }
@@ -97,7 +99,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         foreach (GameObject room in roomsList)      //dodajemy do listy wszystkie znalezione wolne tile
         {
             List<GameObject> groundPositions = room.gameObject.GetComponent<Room>().FindGroundInRoom();
-            freeSpaces.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Normal));
+            freeSpaces.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Normal));        //do zliczania pozycji bezpiecznych i niebezpiecznych
+            enemiesAndSawSpawnPoints.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Enemies));     //pozycje spawnu na ktorych moga zostac zespawnieni przeciwnicy lub koło
         }
 
         int safeTiles;          //liczba tileów bezpiecznych i niebezpiecznych
@@ -109,8 +112,16 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         int dangerousTilesFilled = 0;
         while (dangerousTiles > dangerousTilesFilled)
         {
+            GameObject spawnPoint;
             Enemies enemy = ChooseRandomEnemyOrTrap();
-            GameObject spawnPoint = objectsGenerator.GetRandomPositionToSpawn(freeSpaces);
+            if (enemy == spikesTrap)
+            {
+                spawnPoint = objectsGenerator.GetRandomPositionToSpawn(freeSpaces);
+            }
+            else
+            {
+                spawnPoint = objectsGenerator.GetRandomPositionToSpawn(enemiesAndSawSpawnPoints);
+            }
             if (spawnPoint == null)
             {
                 break;
@@ -160,9 +171,9 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                 {
                     dangerousTilesNumber++;
                     newPosLeft.x -= 1;
-                    if (freeSpaces.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft)))
+                    if (enemiesAndSawSpawnPoints.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft)))
                     {
-                        freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
+                        enemiesAndSawSpawnPoints.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
                     }
                     newPosDownLeft.x -= 1;
                 }
@@ -179,9 +190,9 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                 {
                     dangerousTilesNumber++;
                     newPosRight.x += 1;
-                    if (freeSpaces.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight)))
+                    if (enemiesAndSawSpawnPoints.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight)))
                     {
-                        freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight));
+                        enemiesAndSawSpawnPoints.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight));
                     }
                     newPosDownRight.x += 1;
                 }
@@ -190,8 +201,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             Debug.Log("Pos " + position);
             Debug.Log(enemy.typeOfEnemy + " " + dangerousTilesNumber);
 
-            if (dangerousTilesNumber > 6)
-                dangerousTilesNumber = 6;
+            if (dangerousTilesNumber > 8)
+                dangerousTilesNumber = 8;
 
             return dangerousTilesNumber;
             

@@ -102,7 +102,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             freeSpaces.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Normal));        //do zliczania pozycji bezpiecznych i niebezpiecznych
             enemiesAndSawSpawnPoints.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Enemies));     //pozycje spawnu na ktorych moga zostac zespawnieni przeciwnicy lub koło
         }
-
+        SaveFreeSpacesToFile("freeSpace1.txt", freeSpaces);
+        SaveFreeSpacesToFile("enemiesAndSaw1.txt", enemiesAndSawSpawnPoints);
         int safeTiles;          //liczba tileów bezpiecznych i niebezpiecznych
         int dangerousTiles;
 
@@ -110,9 +111,10 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         dangerousTiles = freeSpaces.Count - safeTiles;
 
         int dangerousTilesFilled = 0;
+        GameObject spawnPoint;
         while (dangerousTiles > dangerousTilesFilled)
         {
-            GameObject spawnPoint;
+            
             Enemies enemy = ChooseRandomEnemyOrTrap();
             if (enemy == spikesTrap)
             {
@@ -121,6 +123,12 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             else
             {
                 spawnPoint = objectsGenerator.GetRandomPositionToSpawn(enemiesAndSawSpawnPoints);
+
+                if (spawnPoint == null)
+                {
+                    enemy = spikesTrap;
+                    spawnPoint = objectsGenerator.GetRandomPositionToSpawn(freeSpaces);
+                }
             }
             if (spawnPoint == null)
             {
@@ -133,8 +141,26 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
 
             Instantiate(enemyPrefab, position, Quaternion.identity);
             freeSpaces.Remove(spawnPoint);
+            Debug.Log("Usuwanie z freeSPaces: " + spawnPoint);
+            if (enemiesAndSawSpawnPoints.Contains(spawnPoint))
+            {
+                enemiesAndSawSpawnPoints.Remove(spawnPoint);
+                Debug.Log("Usuwanie z enemies: " + spawnPoint);
+            }
+                
         }
-
+        if (safeTilesRatio == 0 && freeSpaces.Count > 0)
+        {
+            foreach (GameObject space in freeSpaces)
+            {
+                Enemies enemy = spikesTrap;
+                Vector2 position = new(space.transform.position.x, space.transform.position.y + enemy.pivotAdjustment);
+                GameObject enemyPrefab = enemy.typeOfEnemy;
+                Instantiate(enemyPrefab, position, Quaternion.identity);
+            }
+        }
+        SaveFreeSpacesToFile("freeSpace2.txt", freeSpaces);
+        SaveFreeSpacesToFile("enemiesAndSaw2.txt", enemiesAndSawSpawnPoints);
         SpawnPlayer player = FindObjectOfType<SpawnPlayer>();
         player.PlayerSpawn();
         stopGenerator = true;
@@ -171,9 +197,15 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                 {
                     dangerousTilesNumber++;
                     newPosLeft.x -= 1;
-                    if (enemiesAndSawSpawnPoints.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft)))
+                    if (enemiesAndSawSpawnPoints.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft) ))
                     {
                         enemiesAndSawSpawnPoints.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
+                        Debug.Log("Usuwanie z enemies po lewo: " + newPosDownLeft);
+                    }
+                    if (freeSpaces.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft)))
+                    {
+                        freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownLeft));
+                        Debug.Log("Usuwanie z freeSPaces po lewo: " + newPosDownLeft);
                     }
                     newPosDownLeft.x -= 1;
                 }
@@ -193,6 +225,12 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                     if (enemiesAndSawSpawnPoints.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight)))
                     {
                         enemiesAndSawSpawnPoints.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight));
+                        Debug.Log("Usuwanie z enemies po prawo: " + newPosDownRight);
+                    }
+                    if (freeSpaces.Contains(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight)))
+                    {
+                        freeSpaces.Remove(objectsGenerator.CheckNeighbourAtPosition(newPosDownRight));
+                        Debug.Log("Usuwanie z freeSPaces po prawo: " + newPosDownRight);
                     }
                     newPosDownRight.x += 1;
                 }
@@ -201,8 +239,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             Debug.Log("Pos " + position);
             Debug.Log(enemy.typeOfEnemy + " " + dangerousTilesNumber);
 
-            if (dangerousTilesNumber > 8)
-                dangerousTilesNumber = 8;
+            if (dangerousTilesNumber > 9)
+                dangerousTilesNumber = 9;
 
             return dangerousTilesNumber;
             
@@ -270,5 +308,17 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         }
     }
 
+    public void SaveFreeSpacesToFile(string fileName, List<GameObject> list)
+    {
+        // Używamy Application.dataPath, aby uzyskać ścieżkę do folderu "Assets"
+        string filePath = Path.Combine(Application.dataPath, "../", fileName);
 
+        using (StreamWriter writer = new StreamWriter(filePath))
+        {
+            foreach (GameObject space in list)
+            {
+                writer.WriteLine($"{space.name} at {space.transform.position}");
+            }
+        }
+    }
 }

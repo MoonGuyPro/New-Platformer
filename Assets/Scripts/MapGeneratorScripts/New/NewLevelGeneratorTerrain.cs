@@ -98,7 +98,10 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
             int rand = Random.Range(0, rooms.Length);
             newRoom = Instantiate(rooms[rand], transform.position, Quaternion.identity);
             generatedRoomsOnPath.Add(newRoom);
-            direction = RandomEnumValue<Direction>(0);
+            if (numberOfRoomsInPath == 4)
+                direction = Direction.Down;
+            else
+                direction = RandomEnumValue<Direction>(0);
         
             //Kod do nowego generowania
             currentPosition = transform.position;
@@ -251,6 +254,10 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
             }
 
             skip = false;
+        } 
+        else if (numberOfRoomsInPath == 3 - row)
+        {
+            newDirection = NewDirection.Down;
         }
         else if (numberOfRoomsInPath <= number - 4)
         {

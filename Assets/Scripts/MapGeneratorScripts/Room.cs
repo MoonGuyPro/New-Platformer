@@ -36,12 +36,12 @@ public class Room : MonoBehaviour
         return groundTilesInRoom;
     }
 
-    private void OnDrawGizmos()
+/*    private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Vector2 center = transform.position;
         Gizmos.DrawWireCube(center, new Vector2(9,9));
-    }
+    }*/
 
     public void RoomDestruction()
     {

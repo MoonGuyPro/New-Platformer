@@ -6191,11 +6191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   numberOfRoomsInPath: 8
-  safeTilesRatio: 0.517
+  safeTilesRatio: 0.745
   fireAltarAmount: 2
   iceAltarAmount: 1
   healingPointsAmount: 2
-  coinsAmount: 30
+  coinsAmount: 20
 --- !u!1 &457987779
 GameObject:
   m_ObjectHideFlags: 0

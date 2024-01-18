@@ -69,7 +69,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -766,6 +766,7 @@ MonoBehaviour:
   playerCombat: {fileID: 2180888927639772086}
   runSpeed: 40
   isJumping: 0
+  heatMapTexture: {fileID: 0}
 --- !u!95 &6592858719222155801
 Animator:
   serializedVersion: 5
@@ -1535,7 +1536,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 3
+    OrthographicSize: 5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0

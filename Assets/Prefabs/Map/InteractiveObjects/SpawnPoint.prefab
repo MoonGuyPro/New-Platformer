@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7285373822752351680}
   - component: {fileID: 7285373822752351683}
   - component: {fileID: 2667604007580803064}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,4 +98,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1787277071871187912, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
-  loadingCanvas: {fileID: 0}

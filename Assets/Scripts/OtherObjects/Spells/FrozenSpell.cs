@@ -17,6 +17,7 @@ public class FrozenSpell : Spell
     {
         base.Awake();
         applySlow = false;
+        damage = 1;
     }
 
     protected override void FixedUpdate()

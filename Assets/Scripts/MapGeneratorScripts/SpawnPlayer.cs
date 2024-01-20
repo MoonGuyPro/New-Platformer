@@ -10,8 +10,10 @@ public class SpawnPlayer : MonoBehaviour
     public void PlayerSpawn()
     {
         Vector3 spawnPosition = transform.position;
-
-        Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
+        GameObject playerObject = GameObject.FindWithTag("Player");
+        playerObject.transform.position = spawnPosition;
+        playerObject.SetActive(true);
+        //Instantiate(playerPrefab, spawnPosition, Quaternion.identity);
 
         //loadingCanvas.enabled = false;
     }

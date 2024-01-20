@@ -23,6 +23,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     [SerializeField] private GameObject[] startingRooms;
     [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private LayerMask roomLayer;
+    [SerializeField] private LayerMask groundLayer;
 
 
     [Header("Level size variables")] 
@@ -50,6 +51,9 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     private int roomsInPathSpawned;
     private NewDirection newDirection;
     private bool firstRoomSpawned;
+    public Texture2D heatMapTexture;
+    public static int width = 1000; // Szeroko�� mapy cieplnej
+    public static int height = 1000; // Wysoko�� mapy cieplnej
 
 
     public enum RoomType        //określa wyjścia z danego pokoju
@@ -90,6 +94,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         loadingCanvas.enabled = true;   //loading screen
         firstRoomSpawned = false;
         directionsList = new List<NewDirection>();
+        heatMapTexture = new Texture2D(width, height);
         if (randomNumberOfRooms)
         {
             //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
@@ -180,6 +185,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         }
         else
         {
+            UpdateHeatMapWithPath();
             stopGeneration = true;
         }
 
@@ -544,7 +550,36 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
             Debug.Log("Room not found");
         }
     }
-    
-    
+
+    public void UpdateHeatMapWithPath()
+    {
+        Vector2 pos = Vector2.zero;
+        float radius = 42;
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(pos, radius, groundLayer);
+
+        int dotSize = 8; // Rozmiar kropki w pikselach
+
+        foreach (Collider2D collider in colliders)
+        {
+            Vector2 colliderPosition = collider.transform.position;
+            int groundX = (int)(((colliderPosition.x + 10) / 40.0f) * width);
+            int groundY = (int)(((colliderPosition.y + 10) / 40.0f) * height);
+            groundX = Mathf.Clamp(groundX, 0, width - 1);
+            groundY = Mathf.Clamp(groundY, 0, height - 1);
+
+            // Rysowanie większych kropek
+            for (int x = -dotSize; x <= dotSize; x++)
+            {
+                for (int y = -dotSize; y <= dotSize; y++)
+                {
+                    int drawX = Mathf.Clamp(groundX + x, 0, width - 1);
+                    int drawY = Mathf.Clamp(groundY + y, 0, height - 1);
+                    heatMapTexture.SetPixel(drawX, drawY, Color.black);
+                }
+            }
+        }
+
+        heatMapTexture.Apply();
+    }
 
 }

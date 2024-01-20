@@ -182,12 +182,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04efe42a6a9530418dab8860109d7af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  damage: 3
+  speed: 8
+  damage: 1
   enemyTag: Enemy
   casterTag: Player
   hit: 0
   angle: 0
-  slowFactor: 0.181
+  slowFactor: 0.245
   slowDuration: 2
   animator: {fileID: 7800797940738147679}

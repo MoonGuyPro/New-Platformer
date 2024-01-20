@@ -20,6 +20,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     [Header("Traps")] 
     [SerializeField] private GameObject movingSawPrefab;
     [SerializeField] private GameObject spikesPrefab;
+    
+    [SerializeField] private GameObject playerObject;
 
     private float safeTilesRatio;
 
@@ -102,8 +104,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             freeSpaces.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Normal));        //do zliczania pozycji bezpiecznych i niebezpiecznych
             enemiesAndSawSpawnPoints.AddRange(objectsGenerator.FindPlacesToSpawn(groundPositions, NewLevelGeneratorInteractiveObjects.SpawnPointType.Enemies));     //pozycje spawnu na ktorych moga zostac zespawnieni przeciwnicy lub koło
         }
-        SaveFreeSpacesToFile("freeSpace1.txt", freeSpaces);
-        SaveFreeSpacesToFile("enemiesAndSaw1.txt", enemiesAndSawSpawnPoints);
+        /*SaveFreeSpacesToFile("freeSpace1.txt", freeSpaces);
+        SaveFreeSpacesToFile("enemiesAndSaw1.txt", enemiesAndSawSpawnPoints);*/
         int safeTiles;          //liczba tileów bezpiecznych i niebezpiecznych
         int dangerousTiles;
 
@@ -159,10 +161,14 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
                 Instantiate(enemyPrefab, position, Quaternion.identity);
             }
         }
-        SaveFreeSpacesToFile("freeSpace2.txt", freeSpaces);
-        SaveFreeSpacesToFile("enemiesAndSaw2.txt", enemiesAndSawSpawnPoints);
+        /*SaveFreeSpacesToFile("freeSpace2.txt", freeSpaces);
+        SaveFreeSpacesToFile("enemiesAndSaw2.txt", enemiesAndSawSpawnPoints);*/
         SpawnPlayer player = FindObjectOfType<SpawnPlayer>();
-        player.PlayerSpawn();
+        //player.PlayerSpawn();
+        Vector2 playerPos = player.transform.position;
+        playerObject.transform.position = playerPos;
+        playerObject.SetActive(true);
+        
         stopGenerator = true;
 
     }

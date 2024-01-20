@@ -110,7 +110,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1468354083
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 84ce2f114ad12bd4ebafc77060220324, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -180,7 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  startingHealth: 6
+  startingHealth: 4
   components:
   - {fileID: -1679295109463204698}
   - {fileID: 7833596151801756710}
@@ -222,12 +222,15 @@ MonoBehaviour:
   wallAndGroundLayer:
     serializedVersion: 2
     m_Bits: 128
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
   rangeWallCollider: 1.23
   wallColliderDistance: 0.76
   rangeGroundCollider: 1.29
   groundColliderDistance: 0.73
   speed: 2
-  idleDuration: 3
+  idleDuration: 2
   anim: {fileID: 5805560536809627481}
 --- !u!114 &-1679295109463204698
 MonoBehaviour:
@@ -244,7 +247,7 @@ MonoBehaviour:
   colliderDistance: 0.48
   boxCollider: {fileID: 5805560536809627478}
   attackCooldown: 1
-  damage: 1
+  damage: 2
   range: 5.03
   firepoint: {fileID: 6815118924895524611}
   spellPrefab: {fileID: 7800797940738147676, guid: fed1581af1a27aa44bd27cb8cdcf9be3, type: 3}

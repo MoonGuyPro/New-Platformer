@@ -12,26 +12,28 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 40f;
 
     private float horizontalMove = 0f;
+    private NewLevelGeneratorTerrain newLevelGeneratorTerrain;
     public bool isJumping = false;
 
     //Do tworzenia mapy cieplnej 
-    public static int width = 100; // Szerokoœæ mapy cieplnej
-    public static int height = 100; // Wysokoœæ mapy cieplnej
+    public static int width = 1000; // Szerokoï¿½ï¿½ mapy cieplnej
+    public static int height = 1000; // Wysokoï¿½ï¿½ mapy cieplnej
     public Texture2D heatMapTexture;
 
     private void Awake()
     {
-        heatMapTexture = new Texture2D(width, height);
+        newLevelGeneratorTerrain = FindObjectOfType<NewLevelGeneratorTerrain>();
+        heatMapTexture = newLevelGeneratorTerrain.heatMapTexture;
     }
 
     public void UpdateHeatMapAtPosition(Vector2 pos)
     {
         int x = (int)(((pos.x + 10) / 40.0f) * width);
         int y = (int)(((pos.y + 10) / 40.0f) * height);
-        // Upewnij siê, ¿e wspó³rzêdne nie wychodz¹ poza teksturê
+        // Upewnij siï¿½, ï¿½e wspï¿½rzï¿½dne nie wychodzï¿½ poza teksturï¿½
         x = Mathf.Clamp(x, 0, width - 1);
         y = Mathf.Clamp(y, 0, height - 1);
-        int radius = 2; // Mo¿esz dostosowaæ rozmiar promienia
+        int radius = 2; // Moï¿½esz dostosowaï¿½ rozmiar promienia
 
         for (int dx = -radius; dx <= radius; dx++)
         {
@@ -40,8 +42,8 @@ public class PlayerMovement : MonoBehaviour
                 if (x + dx >= 0 && y + dy >= 0 && x + dx < width && y + dy < height)
                 {
                     Color existingColor = heatMapTexture.GetPixel(x + dx, y + dy);
-                    existingColor += new Color(0.08f, 0, 0, 1); // Stopniowo zwiêkszaj intensywnoœæ czerwonego kana³u
-                    existingColor.r = Mathf.Min(existingColor.r, 1); // Ogranicz wartoœæ czerwonego kana³u do 1
+                    existingColor += new Color(0.08f, 0, 0, 1); // Stopniowo zwiï¿½kszaj intensywnoï¿½ï¿½ czerwonego kanaï¿½u
+                    existingColor.r = Mathf.Min(existingColor.r, 1); // Ogranicz wartoï¿½ï¿½ czerwonego kanaï¿½u do 1
                     heatMapTexture.SetPixel(x + dx, y + dy, existingColor);
                 }
             }
@@ -63,8 +65,8 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", true);
         }
 
-        if (Time.frameCount % 50 == 0)
-        {
+        if (Time.frameCount % 20 == 0)
+        { 
             UpdateHeatMapAtPosition(transform.position);
         }
     }

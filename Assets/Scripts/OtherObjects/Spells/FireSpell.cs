@@ -5,9 +5,11 @@ using UnityEngine;
 public class FireSpell : Spell
 {
     public Animator animator;
+    
 
     protected override void Awake()
     {
+        damage = 2;
         base.Awake();
     }
 

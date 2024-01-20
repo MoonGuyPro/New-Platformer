@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7285373822752351680}
   - component: {fileID: 7285373822752351683}
   - component: {fileID: 2667604007580803064}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: SpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,8 +27,8 @@ Transform:
   m_GameObject: {fileID: 7285373822752351682}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.3241043, y: -3.529, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -98,4 +98,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerPrefab: {fileID: 1787277071871187912, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
-  loadingCanvas: {fileID: 0}

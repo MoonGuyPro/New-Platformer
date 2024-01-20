@@ -73,7 +73,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     public bool MapGenerated()
     {
         int roomsGeneratedNumber = generator.generatedRandomRooms.Count + generator.generatedRoomsOnPath.Count;
-        if (roomsGeneratedNumber == 16)
+        if (roomsGeneratedNumber >= 16)
         {
             return true;
         }
@@ -84,7 +84,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     {
         //Najpierw spawn gracza i koniec poziomu
         firstRoom = generator.generatedRoomsOnPath[0];
-        SpawnObjectInRoom(firstRoom, spawnPoint, 1, SpawnPointType.Normal);
+        SpawnObjectInRoom(firstRoom, spawnPoint, 1.48f, SpawnPointType.Altar);
         lastRoom = generator.generatedRoomsOnPath[^1];
         SpawnObjectInRoom(lastRoom, finishPoint, 1, SpawnPointType.Normal);
         
@@ -136,7 +136,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
     private void SpawnAltars(GameObject gameObject, int amount, List<GameObject> roomsList)
     {
-        for (int i = 0; i <= amount; i++)       //Generujemy taką ilość jaką wybraliśmy w inspektorze
+        for (int i = 0; i < amount; i++)       //Generujemy taką ilość jaką wybraliśmy w inspektorze
         {
             int index = Random.Range(0, roomsList.Count);       //Losujemy pokój w którym powstanie obiekt
             GameObject randomRoom = roomsList[index];
@@ -233,7 +233,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     {
         if (gameObjects.Count == 0)
         {
-            Debug.LogError("Lista gameObjects jest pusta.");
+            Debug.Log("Lista gameObjects jest pusta.");
             return null;
         }
 

@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1468354083
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 84ce2f114ad12bd4ebafc77060220324, type: 3}
   m_Color: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
   m_FlipX: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  startingHealth: 8
+  startingHealth: 6
   components:
   - {fileID: 5990034010468257125}
   - {fileID: 8000390254817898009}
@@ -210,12 +210,15 @@ MonoBehaviour:
   wallAndGroundLayer:
     serializedVersion: 2
     m_Bits: 128
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 64
   rangeWallCollider: 1.23
   wallColliderDistance: 0.76
   rangeGroundCollider: 1.29
   groundColliderDistance: 0.73
   speed: 2
-  idleDuration: 3
+  idleDuration: 2
   anim: {fileID: 5990034010468257126}
 --- !u!114 &4168925930873207698
 MonoBehaviour:

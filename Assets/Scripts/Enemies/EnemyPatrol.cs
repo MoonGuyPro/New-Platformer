@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,6 +9,7 @@ public class EnemyPatrol : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D boxCollider;
     [SerializeField] private LayerMask wallAndGroundLayer;
+    [SerializeField] private LayerMask playerLayer;
     
     [Header("Wall Collider Variables")]
     [SerializeField] private float rangeWallCollider;
@@ -43,21 +45,51 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Update()
     {
-        if (WallInSight())
-        {
-            if (idleTimer > idleDuration)
-            {
-                direction *= -1;
-                MoveInDirection();
-            }
-
-        }
-        else
+        if (DetectPlayer() || !WallInSight())
         {
             MoveInDirection();
         }
-            
+        else if (idleTimer > idleDuration)
+        {
+            direction *= -1;
+            MoveInDirection();
+        }
     }
+    
+    private bool DetectPlayer()
+    {
+        float horizontalDetectionRange = 3f; // Możesz dostosować ten zakres
+        float verticalDetectionRange = 2f; // Mniejszy zakres pionowy
+
+        Collider2D playerCollider = Physics2D.OverlapBox(
+            transform.position, 
+            new Vector2(horizontalDetectionRange, verticalDetectionRange), 
+            0, 
+            playerLayer);
+
+        if (playerCollider != null)
+        {
+            Vector3 playerDirection = playerCollider.transform.position - transform.position;
+            if (playerDirection.x < 0)
+            {
+                direction = -1;
+            }
+            else
+            {
+                direction = 1;
+            }
+
+            if (WallInSight())
+            {
+                idleTimer = 0; // Resetuje licznik bezczynności
+            }
+
+            return true; // Gracz wykryty
+        }
+
+        return false; // Gracz nie został wykryty
+    }
+
 
     private void MoveInDirection()
     {

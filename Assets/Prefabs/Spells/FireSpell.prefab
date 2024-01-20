@@ -147,10 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ace2bdd32bd89f4e99dd8bce6ab85ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  damage: 5
-  enemyTag: 
-  casterTag: 
+  speed: 6
+  damage: 2
+  enemyTag: Enemy
+  casterTag: Player
   hit: 0
   angle: 0
   animator: {fileID: 7800797940738147679}

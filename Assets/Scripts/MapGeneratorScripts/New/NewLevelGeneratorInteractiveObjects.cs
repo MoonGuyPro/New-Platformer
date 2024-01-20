@@ -39,6 +39,11 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
     private List<GameObject> shorterList;       //lista w której nie am pokoi w ktorych zostały zespawnowane obiekty, potrzebna przy ołtarzach by nie powtarzac pokoju
     private NewLevelGenerator _newLevelGenerator;
+    
+    public Texture2D heatMapTexture;
+    private bool roomsAddedToHeatMap;
+    public static int width = 1000; // Szerokosc mapy cieplnej
+    public static int height = 1000; // Wysokosc mapy cieplnej
 
     public enum SpawnPointType
     {
@@ -59,6 +64,8 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         generator = FindObjectOfType<NewLevelGeneratorTerrain>();
         roomSize = new Vector2(9, 9);
         stopGeneration = false;
+        roomsAddedToHeatMap = false;
+        heatMapTexture = generator.heatMapTexture;
     }
 
     private void Update()
@@ -66,10 +73,54 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         if (MapGenerated() && !stopGeneration)
         {
             SetAllInteractiveObjects();
+            if (!roomsAddedToHeatMap)
+            {
+                AddRoomsToHeatMap();
+                roomsAddedToHeatMap = true;
+            }
         }
         
     }
 
+    private void AddRoomsToHeatMap()
+    {
+        foreach (GameObject randomRoom in generator.generatedRandomRooms)
+        {
+            Vector2 roomPos = randomRoom.transform.position;
+            Vector2 boxSize = new Vector2(10, 10); // Rozmiar kwadratu 10x10
+            Collider2D[] colliders = Physics2D.OverlapBoxAll(roomPos, boxSize, 0, layerToCheck);
+
+            foreach (Collider2D collider in colliders)
+            {
+                Vector2 colliderPosition = collider.transform.position;
+                int groundX = (int)(((colliderPosition.x + 10) / 40.0f) * width);
+                int groundY = (int)(((colliderPosition.y + 10) / 40.0f) * height);
+                groundX = Mathf.Clamp(groundX, 0, width - 1);
+                groundY = Mathf.Clamp(groundY, 0, height - 1);
+
+                // Rysowanie pikseli na mapie cieplnej
+                UpdateHeatMapPixel(groundX, groundY, Color.blue);
+            }
+        }
+
+        heatMapTexture.Apply();
+    }
+
+    private void UpdateHeatMapPixel(int x, int y, Color color)
+    {
+        int dotSize = 8; // Rozmiar kropki
+
+        for (int dx = -dotSize; dx <= dotSize; dx++)
+        {
+            for (int dy = -dotSize; dy <= dotSize; dy++)
+            {
+                int drawX = Mathf.Clamp(x + dx, 0, width - 1);
+                int drawY = Mathf.Clamp(y + dy, 0, height - 1);
+                heatMapTexture.SetPixel(drawX, drawY, color);
+            }
+        }
+    }
+    
     public bool MapGenerated()
     {
         int roomsGeneratedNumber = generator.generatedRandomRooms.Count + generator.generatedRoomsOnPath.Count;
@@ -123,6 +174,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
             Vector2 spawnPosition = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + 1);
             positionsToSpawn.Remove(spawnPoint);
             Instantiate(coin, spawnPosition, Quaternion.identity);
+            DrawCircleOnHeatMap(spawnPosition, Color.yellow);
         }
 
         for (int i = 0; i < healingPointsAmount; i++)
@@ -131,7 +183,44 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
             Vector2 spawnPosition = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + 1);
             positionsToSpawn.Remove(spawnPoint);
             Instantiate(healingPoint, spawnPosition, Quaternion.identity);
+            DrawPlusOnHeatMap(spawnPosition, Color.green);
         }
+    }
+    
+    private void DrawCircleOnHeatMap(Vector2 position, Color color)
+    {
+        int radius = 4; // Możesz dostosować rozmiar koła
+        for (int x = -radius; x <= radius; x++)
+        {
+            for (int y = -radius; y <= radius; y++)
+            {
+                if (x * x + y * y <= radius * radius)
+                {
+                    SetHeatMapPixel(position, x, y, color);
+                }
+            }
+        }
+        heatMapTexture.Apply();
+    }
+
+    private void DrawPlusOnHeatMap(Vector2 position, Color color)
+    {
+        int size = 5; // Rozmiar plusa
+        for (int i = -size; i <= size; i++)
+        {
+            // Pionowa część plusa
+            SetHeatMapPixel(position, i, 0, color);
+            // Pozioma część plusa
+            SetHeatMapPixel(position, 0, i, color);
+        }
+        heatMapTexture.Apply();
+    }
+    
+    private void SetHeatMapPixel(Vector2 position, int dx, int dy, Color color)
+    {
+        int pixelX = Mathf.Clamp((int)((position.x + 10) / 40.0f * width) + dx, 0, width - 1);
+        int pixelY = Mathf.Clamp((int)((position.y + 10) / 40.0f * height) + dy, 0, height - 1);
+        heatMapTexture.SetPixel(pixelX, pixelY, color);
     }
 
     private void SpawnAltars(GameObject gameObject, int amount, List<GameObject> roomsList)

@@ -12,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 40f;
 
     private float horizontalMove = 0f;
-    private NewLevelGeneratorTerrain newLevelGeneratorTerrain;
+    private NewLevelGeneratorInteractiveObjects generator;
     public bool isJumping = false;
 
     //Do tworzenia mapy cieplnej 
@@ -22,8 +22,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        newLevelGeneratorTerrain = FindObjectOfType<NewLevelGeneratorTerrain>();
-        heatMapTexture = newLevelGeneratorTerrain.heatMapTexture;
+        generator = FindObjectOfType<NewLevelGeneratorInteractiveObjects>();
+        heatMapTexture = generator.heatMapTexture;
     }
 
     public void UpdateHeatMapAtPosition(Vector2 pos)
@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
         // Upewnij si�, �e wsp�rz�dne nie wychodz� poza tekstur�
         x = Mathf.Clamp(x, 0, width - 1);
         y = Mathf.Clamp(y, 0, height - 1);
-        int radius = 2; // Mo�esz dostosowa� rozmiar promienia
+        int radius = 4; // Mozesz dostosowac rozmiar promienia
 
         for (int dx = -radius; dx <= radius; dx++)
         {
@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
                 if (x + dx >= 0 && y + dy >= 0 && x + dx < width && y + dy < height)
                 {
                     Color existingColor = heatMapTexture.GetPixel(x + dx, y + dy);
-                    existingColor += new Color(0.08f, 0, 0, 1); // Stopniowo zwi�kszaj intensywno�� czerwonego kana�u
+                    existingColor += new Color(0.15f, 0, 0, 1); // Stopniowo zwi�kszaj intensywno�� czerwonego kana�u
                     existingColor.r = Mathf.Min(existingColor.r, 1); // Ogranicz warto�� czerwonego kana�u do 1
                     heatMapTexture.SetPixel(x + dx, y + dy, existingColor);
                 }
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", true);
         }
 
-        if (Time.frameCount % 20 == 0)
+        if (Time.frameCount % 10 == 0)
         { 
             UpdateHeatMapAtPosition(transform.position);
         }

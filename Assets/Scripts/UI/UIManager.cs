@@ -17,7 +17,7 @@ public class UIManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit(); //Quits the game in play mode
-        UnityEditor.EditorApplication.isPlaying = false; //exits play mode
+        //UnityEditor.EditorApplication.isPlaying = false; //exits play mode
     }
 
     public void PlayerWon()

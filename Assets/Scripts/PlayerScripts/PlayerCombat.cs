@@ -94,8 +94,9 @@ public class PlayerCombat : MonoBehaviour
         else
         {
             Debug.LogError("Obiekt spellPrefab nie zawiera komponentu Spell.");
-        }
-        Instantiate(spellPrefab, magicWandPosition.position , Quaternion.identity);
+        } 
+        
+        Instantiate(spellPrefab, transform.position , Quaternion.identity);
     }
 
     private void PlayerDead()

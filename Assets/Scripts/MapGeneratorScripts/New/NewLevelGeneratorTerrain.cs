@@ -51,9 +51,10 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
     private int roomsInPathSpawned;
     private NewDirection newDirection;
     private bool firstRoomSpawned;
+    
     public Texture2D heatMapTexture;
-    public static int width = 1000; // Szeroko�� mapy cieplnej
-    public static int height = 1000; // Wysoko�� mapy cieplnej
+    public static int width = 1000; // Szerokosc mapy cieplnej
+    public static int height = 1000; // Wysokosc mapy cieplnej
 
 
     public enum RoomType        //określa wyjścia z danego pokoju
@@ -94,7 +95,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         loadingCanvas.enabled = true;   //loading screen
         firstRoomSpawned = false;
         directionsList = new List<NewDirection>();
-        heatMapTexture = new Texture2D(width, height);
+        SetHeatMapBackground();
         if (randomNumberOfRooms)
         {
             //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
@@ -115,6 +116,21 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
             
         }
 
+    }
+
+    private void SetHeatMapBackground()
+    {
+        // Inicjalizacja tekstury heatMap
+        heatMapTexture = new Texture2D(width, height);
+
+        // Wypełnienie tekstury kolorem czarnym
+        Color[] pixels = new Color[width * height];
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            pixels[i] = Color.black; // Ustawienie każdego piksela na czarny
+        }
+        heatMapTexture.SetPixels(pixels);
+        heatMapTexture.Apply();
     }
 
     private void Update()
@@ -217,8 +233,8 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         }
         else
         {
-            int rand = Random.Range(0, rooms.Length);
-            newRoom = Instantiate(rooms[rand], currentPosition, Quaternion.identity);
+            choosedRoom = GetRandomRoomWithType(RoomType.LR);
+            newRoom = Instantiate(choosedRoom, currentPosition, Quaternion.identity);
         }
 
         generatedRoomsOnPath.Add(newRoom);
@@ -574,7 +590,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                 {
                     int drawX = Mathf.Clamp(groundX + x, 0, width - 1);
                     int drawY = Mathf.Clamp(groundY + y, 0, height - 1);
-                    heatMapTexture.SetPixel(drawX, drawY, Color.black);
+                    heatMapTexture.SetPixel(drawX, drawY, Color.green);
                 }
             }
         }

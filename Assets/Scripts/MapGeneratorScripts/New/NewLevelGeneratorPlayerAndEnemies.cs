@@ -21,6 +21,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     [SerializeField] private GameObject spikesPrefab;
     
     [SerializeField] private GameObject playerObject;
+    [SerializeField] private Canvas canvas;
 
     private float safeTilesRatio;
 
@@ -162,6 +163,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         Vector2 playerPos = player.transform.position;
         playerObject.transform.position = playerPos;
         playerObject.SetActive(true);
+        canvas.enabled = false;
         
         stopGenerator = true;
 

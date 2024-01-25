@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,36 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject winScreen;
 
+    private void Update()
+    {
+        // Sprawdza czy klawisz R został naciśnięty
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Restart();
+        }
+
+        // Sprawdza czy klawisz Q został naciśnięty
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            Quit();
+        }
+    }
+
     public void Restart()
     {
         Time.timeScale = 1f;
+        Debug.Log("Restart");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Quit()
     {
-        Application.Quit(); //Quits the game in play mode
-        //UnityEditor.EditorApplication.isPlaying = false; //exits play mode
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // Tylko w Unity Editor
+#else
+        Application.Quit(); // Dla zbudowanej aplikacji
+#endif
+        Debug.Log("Quit");
     }
 
     public void PlayerWon()

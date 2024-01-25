@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     //Do tworzenia mapy cieplnej 
     public static int width = 1000; // Szeroko�� mapy cieplnej
     public static int height = 1000; // Wysoko�� mapy cieplnej
-    public Texture2D heatMapTexture;
+    [HideInInspector] public Texture2D heatMapTexture;
 
     private void Awake()
     {

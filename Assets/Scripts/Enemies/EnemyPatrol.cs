@@ -29,11 +29,13 @@ public class EnemyPatrol : MonoBehaviour
     [SerializeField] private Animator anim;
 
     private int direction;
+    private Collider2D playerCollider;
 
 
     private void Start()
     {
         direction = 1;
+        playerCollider = new Collider2D();
     }
     
     private void OnDisable()
@@ -44,7 +46,12 @@ public class EnemyPatrol : MonoBehaviour
 
     private void Update()
     {
-        if (DetectPlayer() || !WallInSight())
+        if (DetectPlayer() && !WallInSight())
+        {
+            FollowPlayer();
+            MoveInDirection();
+        }
+        else if (!WallInSight())
         {
             MoveInDirection();
         }
@@ -60,7 +67,7 @@ public class EnemyPatrol : MonoBehaviour
         float horizontalDetectionRange = 3f; // Możesz dostosować ten zakres
         float verticalDetectionRange = 2f; // Mniejszy zakres pionowy
 
-        Collider2D playerCollider = Physics2D.OverlapBox(
+        playerCollider = Physics2D.OverlapBox(
             transform.position, 
             new Vector2(horizontalDetectionRange, verticalDetectionRange), 
             0, 
@@ -68,25 +75,28 @@ public class EnemyPatrol : MonoBehaviour
 
         if (playerCollider != null)
         {
-            Vector3 playerDirection = playerCollider.transform.position - transform.position;
-            if (playerDirection.x < 0)
-            {
-                direction = -1;
-            }
-            else
-            {
-                direction = 1;
-            }
-
-            if (WallInSight())
-            {
-                idleTimer = 0; // Resetuje licznik bezczynności
-            }
-
             return true; // Gracz wykryty
         }
 
         return false; // Gracz nie został wykryty
+    }
+
+    private void FollowPlayer()
+    {
+        Vector3 playerDirection = playerCollider.transform.position - transform.position;
+        if (playerDirection.x < 0)
+        {
+            direction = -1;
+        }
+        else
+        {
+            direction = 1;
+        }
+
+        if (WallInSight())
+        {
+            idleTimer = 0; // Resetuje licznik bezczynności
+        }
     }
 
 

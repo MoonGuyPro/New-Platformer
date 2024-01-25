@@ -102,7 +102,7 @@ public class PlayerCombat : MonoBehaviour
     private void PlayerDead()
     {
         uiManager.GameOver();
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
         string folderPath = Path.Combine(Application.dataPath, "..");
         string filePath = Path.Combine(folderPath, "heatMap_" + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png");
         playerMovement.SaveHeatMapToFile(playerMovement.heatMapTexture, filePath);

@@ -777,7 +777,7 @@ MonoBehaviour:
   controller: {fileID: 4021767026475968284}
   animator: {fileID: 6592858719222155801}
   playerCombat: {fileID: 2180888927639772086}
-  runSpeed: 30
+  runSpeed: 27
   isJumping: 0
   heatMapTexture: {fileID: 0}
 --- !u!95 &6592858719222155801
@@ -812,11 +812,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a504e09ef81b0b4fa4609cfdb8a08d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellPrefab: {fileID: 7800797940738147676, guid: 27c7206798e87b64a9692dd78dea2646, type: 3}
+  spellPrefab: {fileID: 8885662689351966781, guid: 8b649a2ff2928394abdd5bfe8a3c0d1b, type: 3}
   animator: {fileID: 6592858719222155801}
   playerMovement: {fileID: 5416054531538758791}
   magicWandPosition: {fileID: 8246232765961541503}
-  timeBetweenSpells: 0.6
+  timeBetweenSpells: 0.7
   isCastingSpell: 0
 --- !u!114 &-74181176238058492
 MonoBehaviour:
@@ -831,7 +831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentHealth: 0
-  startingHealth: 100
+  startingHealth: 7
   components:
   - {fileID: 5416054531538758791}
   - {fileID: 2180888927639772086}

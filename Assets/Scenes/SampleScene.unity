@@ -4991,7 +4991,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -74181176238058492, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: startingHealth
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1623428799279985006, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_IsActive
@@ -5011,7 +5011,7 @@ PrefabInstance:
       objectReference: {fileID: 8885662689351966781, guid: 8b649a2ff2928394abdd5bfe8a3c0d1b, type: 3}
     - target: {fileID: 2180888927639772086, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: timeBetweenSpells
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 4163564380909392584, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_RootOrder
@@ -7003,7 +7003,7 @@ MonoBehaviour:
   safeTilesRatio: 0.5
   fireAltarAmount: 1
   iceAltarAmount: 1
-  healingPointsAmount: 2
+  healingPointsAmount: 3
   coinsAmount: 16
 --- !u!1 &457987779
 GameObject:

@@ -11,6 +11,7 @@ TagManager:
   - FireSpell
   - Healing
   - Coin
+  - FrozenSpell
   layers:
   - Default
   - TransparentFX

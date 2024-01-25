@@ -56,6 +56,8 @@ public class Spell : MonoBehaviour
     protected virtual IEnumerator Destroy()
     {
         spriteRenderer.enabled = false;
+        CircleCollider2D boxCollider2D = GetComponent<CircleCollider2D>();
+        boxCollider2D.enabled = false;
         yield return new WaitForSeconds(6);
         Destroy(gameObject);
     }

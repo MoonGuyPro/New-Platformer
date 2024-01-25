@@ -17,7 +17,7 @@ public class Health : MonoBehaviour
     
     private Animator animator;
     private bool isDead;
-    
+
 
     private void Awake()
     {
@@ -41,6 +41,10 @@ public class Health : MonoBehaviour
             if (!isDead)
             {
                 animator.SetTrigger("Die");
+                if (gameObject.name == "Player")
+                {
+                    gameObject.GetComponent<PlayerCombat>().PlayerDead();
+                }
             
                 foreach (Behaviour comp in components)
                     comp.enabled = false;

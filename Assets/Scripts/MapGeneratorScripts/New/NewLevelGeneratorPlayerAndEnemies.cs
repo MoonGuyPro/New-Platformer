@@ -31,6 +31,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
 
     private List<GameObject> freeSpaces;        //Dla przeciwników i kręcącego koła
     private List<GameObject> enemiesAndSawSpawnPoints;
+    
+    public Texture2D heatMapTexture;
 
     [Serializable]
     public class Enemies
@@ -54,6 +56,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     private List<Enemies> enemiesList;
     
     private NewLevelGenerator _newLevelGenerator;
+    private bool assigned;
 
     private void Start()
     {
@@ -65,6 +68,8 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         freeSpaces = new List<GameObject>();
         enemiesAndSawSpawnPoints = new List<GameObject>();
         stopGenerator = false;
+        assigned = false;
+        
         SetStartingProbabilities();
     }
 
@@ -87,6 +92,11 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
     {
         if (objectsGenerator.stopGeneration && !stopGenerator && objectsGenerator.MapGenerated())
         {
+            if (!assigned)
+            {
+                heatMapTexture = objectsGenerator.heatMapTexture;
+                assigned = true;
+            }
             SpawnEnemiesAndTraps();
         }
     }
@@ -140,6 +150,7 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
             dangerousTilesFilled += NumberOfDangerousTiles(enemy, position, enemy.pivotAdjustment);
 
             Instantiate(enemyPrefab, position, Quaternion.identity);
+            objectsGenerator.DrawSquareOnHeatMap(new Vector2(spawnPoint.transform.position.x, spawnPoint.transform.position.y + sawTrap.pivotAdjustment), Color.magenta, 3); // Violet color for enemies
             freeSpaces.Remove(spawnPoint);
             if (enemiesAndSawSpawnPoints.Contains(spawnPoint))
             {
@@ -304,17 +315,4 @@ public class NewLevelGeneratorPlayerAndEnemies : MonoBehaviour
         }
     }
 
-    public void SaveFreeSpacesToFile(string fileName, List<GameObject> list)
-    {
-        // Używamy Application.dataPath, aby uzyskać ścieżkę do folderu "Assets"
-        string filePath = Path.Combine(Application.dataPath, "../", fileName);
-
-        using (StreamWriter writer = new StreamWriter(filePath))
-        {
-            foreach (GameObject space in list)
-            {
-                writer.WriteLine($"{space.name} at {space.transform.position}");
-            }
-        }
-    }
 }

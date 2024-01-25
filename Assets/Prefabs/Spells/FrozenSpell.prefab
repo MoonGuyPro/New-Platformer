@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -799893157940285616}
   m_Layer: 8
   m_Name: FrozenSpell
-  m_TagString: Spell
+  m_TagString: FrozenSpell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 8
-  damage: 1
+  damage: 2
   enemyTag: Enemy
   casterTag: Player
   hit: 0

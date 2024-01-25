@@ -35,15 +35,15 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     private GameObject firstRoom;
     private GameObject lastRoom;
 
-    private Vector2 roomSize;   //Do określenia rozmiaru pokoju
-
     private List<GameObject> shorterList;       //lista w której nie am pokoi w ktorych zostały zespawnowane obiekty, potrzebna przy ołtarzach by nie powtarzac pokoju
     private NewLevelGenerator _newLevelGenerator;
     
     public Texture2D heatMapTexture;
     private bool roomsAddedToHeatMap;
-    public static int width = 1000; // Szerokosc mapy cieplnej
-    public static int height = 1000; // Wysokosc mapy cieplnej
+    public int width = 1000; // Szerokosc mapy cieplnej
+    public  int height = 1000; // Wysokosc mapy cieplnej
+
+    private Vector2 positionToSave;
 
     public enum SpawnPointType
     {
@@ -62,7 +62,6 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         shorterList = new List<GameObject>();
         
         generator = FindObjectOfType<NewLevelGeneratorTerrain>();
-        roomSize = new Vector2(9, 9);
         stopGeneration = false;
         roomsAddedToHeatMap = false;
         heatMapTexture = generator.heatMapTexture;
@@ -135,9 +134,11 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     {
         //Najpierw spawn gracza i koniec poziomu
         firstRoom = generator.generatedRoomsOnPath[0];
-        SpawnObjectInRoom(firstRoom, spawnPoint, 1.48f, SpawnPointType.Altar);
+        SpawnObjectInRoom(firstRoom, spawnPoint, 1.48f, SpawnPointType.Altar, true);
+        DrawFirstRoomOnHeatMap(positionToSave);
         lastRoom = generator.generatedRoomsOnPath[^1];
-        SpawnObjectInRoom(lastRoom, finishPoint, 1, SpawnPointType.Normal);
+        SpawnObjectInRoom(lastRoom, finishPoint, 1, SpawnPointType.Normal, true);
+        DrawLastRoomOnHeatMap(positionToSave);
         
         //Teraz ołtarze
         List<GameObject> roomsList = generator.generatedRandomRooms;    //Bierzemy pokoje poza główną ścieżką gracza
@@ -229,7 +230,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
         {
             int index = Random.Range(0, roomsList.Count);       //Losujemy pokój w którym powstanie obiekt
             GameObject randomRoom = roomsList[index];
-            SpawnObjectInRoom(randomRoom, gameObject, (float)0.5, SpawnPointType.Altar);
+            SpawnObjectInRoom(randomRoom, gameObject, (float)0.5, SpawnPointType.Altar, false);
             shorterList.Remove(shorterList[index]);
         }
 
@@ -237,7 +238,7 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
     }
     
 
-    private void SpawnObjectInRoom(GameObject room, GameObject objectPrefab, float pivotAdjustment, SpawnPointType type)
+    private void SpawnObjectInRoom(GameObject room, GameObject objectPrefab, float pivotAdjustment, SpawnPointType type, bool shouldSavePos)
     {
         List<GameObject> groundTilesInRoom = room.gameObject.GetComponent<Room>().FindGroundInRoom();
         if (groundTilesInRoom.Count != 0)
@@ -245,6 +246,8 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
             List<GameObject> placesToSpawnList = FindPlacesToSpawn(groundTilesInRoom, type);
             GameObject spawnPoint = GetRandomPositionToSpawn(placesToSpawnList);
             Vector2 spawnPosition = new(spawnPoint.transform.position.x, spawnPoint.transform.position.y + pivotAdjustment);
+            if (shouldSavePos)
+                positionToSave = spawnPosition;
             placesToSpawnList.Remove(spawnPoint);
             Instantiate(objectPrefab, spawnPosition, quaternion.identity);
         }
@@ -331,5 +334,44 @@ public class NewLevelGeneratorInteractiveObjects : MonoBehaviour
 
         return choosed;
     }
+    
+    public void DrawSquareOnHeatMap(Vector2 position, Color color, int size)
+    {
+        for (int x = -size; x <= size; x++)
+        {
+            for (int y = -size; y <= size; y++)
+            {
+                SetHeatMapPixel(position, x, y, color);
+            }
+        }
+        heatMapTexture.Apply();
+    }
+public void DrawFirstRoomOnHeatMap(Vector2 position)
+{
+    if (firstRoom != null)
+    {
+        Color color = Color.white;
+        DrawSquareOnHeatMap(position, color, 8);
+    }
+    else
+    {
+        Debug.Log("First room is not set.");
+    }
+}
+
+public void DrawLastRoomOnHeatMap(Vector2 position)
+{
+    if (lastRoom != null)
+    {
+        Color color = Color.white;
+        DrawSquareOnHeatMap(position, color, 8);
+    }
+    else
+    {
+        Debug.Log("Last room is not set.");
+    }
+}
+
+
 
 }

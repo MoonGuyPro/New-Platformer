@@ -12,8 +12,6 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private PlayerMovement playerMovement;
     [SerializeField] private Transform magicWandPosition;
     
-
-    [SerializeField] private int damage;
     [SerializeField] private float timeBetweenSpells;
     public bool isCastingSpell;
     private UIManager uiManager;
@@ -83,8 +81,7 @@ public class PlayerCombat : MonoBehaviour
         Spell spellComponent = spellPrefab.GetComponent<Spell>();
         spellComponent.casterTag = "Player";
         spellComponent.enemyTag = "Enemy";
-        spellComponent.damage = damage;
-        
+
         // Sprawd�, czy obiekt ma komponent Spell
         if (spellComponent != null)
         {
@@ -96,10 +93,10 @@ public class PlayerCombat : MonoBehaviour
             Debug.LogError("Obiekt spellPrefab nie zawiera komponentu Spell.");
         } 
         
-        Instantiate(spellPrefab, transform.position , Quaternion.identity);
+        Instantiate(spellPrefab, magicWandPosition.position , Quaternion.identity);
     }
 
-    private void PlayerDead()
+    public void PlayerDead()
     {
         uiManager.GameOver();
         //Time.timeScale = 0f;

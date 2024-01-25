@@ -19,6 +19,9 @@ public class PlayerMovement : MonoBehaviour
     public static int width = 1000; // Szeroko�� mapy cieplnej
     public static int height = 1000; // Wysoko�� mapy cieplnej
     [HideInInspector] public Texture2D heatMapTexture;
+    
+    private float nextUpdateTime = 0;
+    private float updateInterval = 0.03f; // Aktualizuj co 0.1 sekundy
 
     private void Awake()
     {
@@ -65,9 +68,10 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("IsJumping", true);
         }
 
-        if (Time.frameCount % 10 == 0)
-        { 
+        if (Time.time >= nextUpdateTime)
+        {
             UpdateHeatMapAtPosition(transform.position);
+            nextUpdateTime = Time.time + updateInterval;
         }
     }
 

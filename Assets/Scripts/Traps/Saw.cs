@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Saw : MonoBehaviour
@@ -66,5 +68,19 @@ public class Saw : MonoBehaviour
         Vector2 raycastStartPoint = (Vector2)boxCollider.bounds.center + new Vector2(direction * boxCollider.bounds.extents.x, -boxCollider.bounds.extents.y);
         Gizmos.DrawLine(raycastStartPoint, raycastStartPoint + Vector2.down * groundDetectionDistance);
     }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.CompareTag("FrozenSpell"))
+        {
+            speed /= 2;            // Zmniejsz prędkość
+            StartCoroutine(ResetSpeed()); // Uruchom korutynę do przywrócenia prędkości
+        }
+    }
     
+    private IEnumerator ResetSpeed()
+    {
+        yield return new WaitForSeconds(3); // Czekaj 3 sekundy
+        speed = 3;              // Przywróć oryginalną prędkość
+    }
 }

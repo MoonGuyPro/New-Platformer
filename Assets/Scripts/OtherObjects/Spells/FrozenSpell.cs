@@ -10,8 +10,8 @@ public class FrozenSpell : Spell
     public Animator animator;
     
     private EnemyPatrol enemyPatrol;
-    private SpriteRenderer enemySpriteRenderer;
     private bool applySlow;
+    private SpriteRenderer enemySpriteRenderer;
     
     protected override void Awake()
     {
@@ -37,10 +37,13 @@ public class FrozenSpell : Spell
             Health enemyHealth = other.GetComponent<Health>();
             enemyHealth.TakeDamage(damage);
             enemyPatrol = other.GetComponent<EnemyPatrol>();
-            if (other.GetComponent<SpriteRenderer>() != null)
+            enemySpriteRenderer = other.GetComponent<SpriteRenderer>();
+            if (enemySpriteRenderer != null)
             {
-                //enemySpriteRenderer = other.GetComponent<SpriteRenderer>();
+                enemySpriteRenderer.color = new Color(0f, 0.952f, 0.839f, 1f); // Ustawienie koloru cyjanowego
+                Debug.Log(enemySpriteRenderer.color);
             }
+            Debug.Log(enemySpriteRenderer.color);
 
             applySlow = true;
             hit = true;
@@ -57,9 +60,15 @@ public class FrozenSpell : Spell
     {
         float originalSpeed = enemyPatrol.speed;
         enemyPatrol.speed *= slowFactor; // Zmniejszenie prędkości
-        //enemySpriteRenderer.color = new Color(0, 1, 1, 1);
+        if (enemySpriteRenderer != null)
+        {
+            enemySpriteRenderer.color = new Color(0f, 0.952f, 0.839f, 1f); // Ustawienie koloru cyjanowego
+        }
         yield return new WaitForSeconds(slowDuration); // Czas trwania spowolnienia
-        //enemySpriteRenderer.color = Color.white;
+        if (enemySpriteRenderer != null)
+        {
+            enemySpriteRenderer.color = Color.white; // Przywrócenie oryginalnego koloru
+        }
         enemyPatrol.speed = originalSpeed; // Przywrócenie oryginalnej prędkości
     }
 }

@@ -18,7 +18,7 @@ public class UIManager : MonoBehaviour
         }
 
         // Sprawdza czy klawisz Q został naciśnięty
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Escape))
         {
             Quit();
         }

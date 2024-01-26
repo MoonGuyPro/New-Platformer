@@ -5005,14 +5005,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2180888927639772086, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
-      propertyPath: spellPrefab
-      value: 
-      objectReference: {fileID: 8885662689351966781, guid: 8b649a2ff2928394abdd5bfe8a3c0d1b, type: 3}
-    - target: {fileID: 2180888927639772086, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
-      propertyPath: timeBetweenSpells
-      value: 0.7
-      objectReference: {fileID: 0}
     - target: {fileID: 4163564380909392584, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -5056,10 +5048,6 @@ PrefabInstance:
     - target: {fileID: 4163564380909392584, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5416054531538758791, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
-      propertyPath: runSpeed
-      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 6867379582496452200, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_BoundingShape2D

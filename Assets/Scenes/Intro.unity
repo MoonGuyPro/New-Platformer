@@ -280,6 +280,6 @@ MonoBehaviour:
   introImages:
   - {fileID: 21300000, guid: 4fa301d60c7c3f4408227ce8db7483af, type: 3}
   - {fileID: 21300000, guid: ddf5daa0f6f547a4cbe318b52caea5f0, type: 3}
-  - {fileID: 21300000, guid: a87be48d046a844468f29c57f9e3016c, type: 3}
+  - {fileID: 21300000, guid: 2da627f4304ac4041a17cd6e1611a9a6, type: 3}
   - {fileID: 21300000, guid: 022b75e04b36bb84391841a312f99e9c, type: 3}
   displayImage: {fileID: 775637106}

@@ -8,6 +8,12 @@ public class SpawnRooms : MonoBehaviour
 {
     public LayerMask whatIsRoom;
     public NewLevelGeneratorTerrain newLevelGenerator;
+
+    [SerializeField] private int firstRoomWeight;
+    [SerializeField] private int secondRoomWeight;
+    [SerializeField] private int thirdRoomWeight;
+    [SerializeField] private int fourRoomWeight;
+    [SerializeField] private int fiveRoomWeight;
     
     private GameObject newRoom;
     
@@ -26,7 +32,7 @@ public class SpawnRooms : MonoBehaviour
     
     int GetWeightedRandomRoomIndex()        //losowanie z wagą by zapewnic mniejsze prawdopodibienstwo dla wylosowania pokoju z wyjsciem na dole
     {
-        int[] weights = {3, 1, 3, 1, 3}; // wagi dla indeksów 0, 1, 2, 3, 4
+        int[] weights = {firstRoomWeight, secondRoomWeight, thirdRoomWeight, fourRoomWeight, fiveRoomWeight}; // wagi dla indeksów 0, 1, 2, 3, 4
         int totalWeight = 0;
 
         foreach (int weight in weights)

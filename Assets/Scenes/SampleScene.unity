@@ -4071,6 +4071,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 0
+  thirdRoomWeight: 4
+  fourRoomWeight: 0
+  fiveRoomWeight: 4
 --- !u!1 &239137562
 GameObject:
   m_ObjectHideFlags: 0
@@ -5004,6 +5009,10 @@ PrefabInstance:
     - target: {fileID: 1787277071871187912, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2180888927639772086, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
+      propertyPath: timeBetweenSpells
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4163564380909392584, guid: ca83b7c1223b3ce40849eb01ae32e6b9, type: 3}
       propertyPath: m_RootOrder
@@ -6725,6 +6734,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 0
+  thirdRoomWeight: 4
+  fourRoomWeight: 0
+  fiveRoomWeight: 4
 --- !u!1 &446066033
 GameObject:
   m_ObjectHideFlags: 0
@@ -6926,7 +6940,7 @@ MonoBehaviour:
   maxX: 20.5
   minY: -5
   moveAmount: 10
-  startTimeBtwRoom: 0.25
+  startTimeBtwRoom: 2
   stopGeneration: 0
   generatedRoomsOnPath: []
   generatedRandomRooms: []
@@ -6987,7 +7001,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 518a309df1e4e6b43b85b199a2961386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfRoomsInPath: 4
+  numberOfRoomsInPath: 10
   safeTilesRatio: 0.5
   fireAltarAmount: 1
   iceAltarAmount: 1
@@ -7951,6 +7965,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &517161143
 GameObject:
   m_ObjectHideFlags: 0
@@ -10599,6 +10618,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &726359266
 GameObject:
   m_ObjectHideFlags: 0
@@ -11297,6 +11321,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &774165095
 GameObject:
   m_ObjectHideFlags: 0
@@ -11447,7 +11476,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &775637106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16487,6 +16516,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &1139829144
 GameObject:
   m_ObjectHideFlags: 0
@@ -17055,6 +17089,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 0
+  thirdRoomWeight: 4
+  fourRoomWeight: 0
+  fiveRoomWeight: 4
 --- !u!1 &1200552260
 GameObject:
   m_ObjectHideFlags: 0
@@ -17753,6 +17792,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &1271938015
 GameObject:
   m_ObjectHideFlags: 0
@@ -18581,6 +18625,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 0
+  thirdRoomWeight: 4
+  fourRoomWeight: 0
+  fiveRoomWeight: 4
 --- !u!1 &1305078115
 GameObject:
   m_ObjectHideFlags: 0
@@ -22139,6 +22188,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &1623118354
 GameObject:
   m_ObjectHideFlags: 0
@@ -22187,6 +22241,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &1652533449
 GameObject:
   m_ObjectHideFlags: 0
@@ -23275,6 +23334,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &1740469534
 GameObject:
   m_ObjectHideFlags: 0
@@ -23583,6 +23647,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 0
+  thirdRoomWeight: 4
+  fourRoomWeight: 0
+  fiveRoomWeight: 4
 --- !u!1 &1762457166
 GameObject:
   m_ObjectHideFlags: 0
@@ -25326,6 +25395,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &1944532841
 GameObject:
   m_ObjectHideFlags: 0
@@ -26804,6 +26878,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 1
+  thirdRoomWeight: 4
+  fourRoomWeight: 1
+  fiveRoomWeight: 4
 --- !u!1 &2009147122
 GameObject:
   m_ObjectHideFlags: 0
@@ -27632,6 +27711,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   newLevelGenerator: {fileID: 450002940}
+  firstRoomWeight: 4
+  secondRoomWeight: 0
+  thirdRoomWeight: 4
+  fourRoomWeight: 0
+  fiveRoomWeight: 4
 --- !u!1 &2056945822
 GameObject:
   m_ObjectHideFlags: 0

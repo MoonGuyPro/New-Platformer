@@ -222,7 +222,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         {
             //Losowanie pozycji startowej z tablicy i inicjalizacja 1 pokoju
             randStartPos = Random.Range(0, startingPositions.Length);
-            newDirection = (NewDirection)Random.Range(0, 3);
+            newDirection = (NewDirection)Random.Range(0, 2);
         }
         currentPosition = startingPositions[randStartPos].position;
 
@@ -252,16 +252,18 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         if (numberOfRoomsInPath == number)
         {
             FillTheRow(row);
+            Debug.Log("fillrow");
         }
-        else if (numberOfRoomsInPath > number - 4)
+        else if (numberOfRoomsInPath > number - 4)      //w momencie gdy nie moze zejsc w dół
         {
+            Debug.Log("1" + " "  + numberOfRoomsInPath + " row: " + row);
             if (newDirection == NewDirection.Down)
             {
-                if (currentPosition.x <= 5)
+                if (Math.Round(currentPosition.x) <= 5)
                 {
                     newDirection = NewDirection.Right;
                 }
-                else if (currentPosition.x >= 15)
+                else if (Math.Round(currentPosition.x) >= 15)
                 {
                     newDirection = NewDirection.Left;
                 }
@@ -277,12 +279,30 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
 
             skip = false;
         } 
-        else if (numberOfRoomsInPath == 3 - row)
+        else if (numberOfRoomsInPath == 3 - row)    //w celu zapewnienia ze algorytm dojdzie do konca mapy
         {
+            Debug.Log("2" + " " + numberOfRoomsInPath+ " row: " + row);
             newDirection = NewDirection.Down;
-        }
-        else if (numberOfRoomsInPath <= number - 4)
+        } 
+        else if (numberOfRoomsInPath == number - 4)     //w celu zapewnienia, że nie bedzie sie tworzył 1 pokoj ktorego mozna nie odwiedzic przez fill row
         {
+            if ((Math.Round(currentPosition.x) == -5 || Math.Round(currentPosition.x) == 25) && newDirection == NewDirection.Down)
+            {
+                newDirection = (NewDirection)Random.Range(0, 3); 
+            }
+            else if ((Math.Round(currentPosition.x) == -5 || Math.Round(currentPosition.x) == 25) &&
+                     newDirection != NewDirection.Down)
+            {
+                newDirection = NewDirection.Down;
+            }
+            else if (newDirection == NewDirection.Down)
+            {
+                newDirection = (NewDirection)Random.Range(0, 2);        //Tylko lewo i prawo
+            }
+        }   
+        else if (numberOfRoomsInPath < number - 4)      //w momencie gdy moze zejsc w dół
+        {
+            Debug.Log("3" + " " + numberOfRoomsInPath+ " row: " + row);
             if (newDirection == NewDirection.Left)
             {
                 newDirection = (NewDirection)Random.Range(1, 3);    
@@ -301,6 +321,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
             }
             skip = false;
         }
+        Debug.Log(newDirection);
         
     }
 
@@ -379,6 +400,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                 {
                     currentPosition.x += moveAmount;
                     choosedRoom = GetRandomRoomWithType(RoomType.LR);
+                    Debug.Log("right");
                 }
                 else
                 {
@@ -387,6 +409,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                     choosedRoom = GetRandomRoomWithType(RoomType.LR);     //wybieramy losowy pokój
                     currentPosition.y -= moveAmount;
                     currentRow++;
+                    Debug.Log("down");
                 }
                 break;
             case NewDirection.Left:
@@ -394,6 +417,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                 {
                     currentPosition.x -= moveAmount;
                     choosedRoom = GetRandomRoomWithType(RoomType.LR);
+                    Debug.Log("Left");
                 }
                 else
                 {
@@ -402,6 +426,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                     choosedRoom = GetRandomRoomWithType(RoomType.LR);
                     currentPosition.y -= moveAmount;
                     currentRow++;
+                    Debug.Log("Down");
                 }
                 break;
 
@@ -415,6 +440,7 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
                 }
                 break;
         }
+        
     }
 
     private void SwapRoomType(RoomType finalRoom) //niszczy poprzedni pokój który nie pasuje i tworzy na jego miejscu nowy z odpowiednim typem
@@ -422,7 +448,6 @@ public class NewLevelGeneratorTerrain : MonoBehaviour
         Vector2 lastRoomPos = generatedRoomsOnPath[^1].gameObject.transform.position;
         generatedRoomsOnPath[^1].gameObject.GetComponent<Room>().RoomDestruction();
         generatedRoomsOnPath.RemoveAt(generatedRoomsOnPath.Count - 1);
-        Debug.Log("usunięty");
         newRoom = Instantiate(GetRandomRoomWithType(finalRoom), lastRoomPos, Quaternion.identity);
         generatedRoomsOnPath.Add(newRoom);
     }

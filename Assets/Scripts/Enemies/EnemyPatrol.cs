@@ -135,6 +135,7 @@ public class EnemyPatrol : MonoBehaviour
         }
     }
 
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -146,5 +147,6 @@ public class EnemyPatrol : MonoBehaviour
         Gizmos.DrawWireCube(wektor, 
             new Vector2(boxCollider.bounds.size.x * rangeGroundCollider, boxCollider.bounds.size.y/2));
     }
+    */
     
 }

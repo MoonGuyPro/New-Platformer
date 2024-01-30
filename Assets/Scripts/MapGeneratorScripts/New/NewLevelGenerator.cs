@@ -12,9 +12,9 @@ public class NewLevelGenerator : MonoBehaviour
     [Range(0,1)] public float safeTilesRatio;
 
     [Header("Exploration settings")] 
-    [Range(1, 3)] public int fireAltarAmount;
-    [Range(1, 3)] public int iceAltarAmount;
-    [Range(1, 5)] public int healingPointsAmount;
-    [Range(1, 30)] public int coinsAmount;
+    [Range(0, 3)] public int fireAltarAmount;
+    [Range(0, 3)] public int iceAltarAmount;
+    [Range(0, 5)] public int healingPointsAmount;
+    [Range(0, 30)] public int coinsAmount;
 
 }

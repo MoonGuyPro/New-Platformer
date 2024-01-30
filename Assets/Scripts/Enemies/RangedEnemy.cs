@@ -59,12 +59,12 @@ public class RangedEnemy : MonoBehaviour
         return hit.collider != null;
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(boxCollider.bounds.center + transform.right * range * transform.localScale.x * colliderDistance, 
             new Vector2(boxCollider.bounds.size.x * range, boxCollider.bounds.size.y));
-    }
+    }*/
 
     private void RangedAttack()
     {

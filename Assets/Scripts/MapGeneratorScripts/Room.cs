@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public int type;
+    //public int type;
     public NewLevelGeneratorTerrain.RoomType roomType;
-    public int roomNumber;
+    //public int roomNumber;
     public LayerMask layerToCheck;
 
     public List<GameObject> FindGroundInRoom()       //Znajduje obiekty terenu w pokoju i dodaje do listy

@@ -5,11 +5,14 @@ using UnityEngine;
 
 public class CoinCollector : MonoBehaviour
 {
-    private int coinAmount;
+    [SerializeField] private GameObject goldText;
+    public int coinAmount;
+    private GoldControler goldControler;
 
     private void Start()
     {
         coinAmount = 0;
+        goldControler = goldText.GetComponent<GoldControler>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -19,6 +22,8 @@ public class CoinCollector : MonoBehaviour
             coinAmount += 1;
             Debug.Log(coinAmount);
             Destroy(other.gameObject);
+            goldControler.UpdateGoldUi(coinAmount);
+            
         }
     }
 }

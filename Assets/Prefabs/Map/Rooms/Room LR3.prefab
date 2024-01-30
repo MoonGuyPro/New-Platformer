@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: -3315462620587115388}
   - component: {fileID: 1046775721039936656}
   m_Layer: 3
-  m_Name: Room LRT
+  m_Name: Room LR3
   m_TagString: Untagged
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  roomType: 2
+  roomType: 0
   roomNumber: 0
   layerToCheck:
     serializedVersion: 2
